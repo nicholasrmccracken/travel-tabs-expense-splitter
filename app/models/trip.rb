@@ -11,6 +11,10 @@ class Trip < ApplicationRecord
   # The owner cannot be a Participant in a Trip
   validate :owner_not_participant
 
+  # Track amounts owed and payed
+  has_many :leaguers, dependent: :destroy
+  has_many :users, through: :leaguers
+
   private
 
   def owner_not_participant
