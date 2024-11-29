@@ -21,6 +21,15 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
   end
 
+  def destroy
+    if @trip.user == current_user # only trip owner can delete trip
+      @trip.destroy
+      redirect_to trips_path, notice: 'Trip was successfully deleted.'
+    else
+      redirect_to trips_path, alert: 'You do not have permission to delete this trip.'
+    end
+  end
+
   private
 
   def trip_params

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :trips, only: %i[new create show] # routes for creating a trip
+  resources :trips, only: %i[new create show destroy] # routes for creating a trip
   # Defines the root path route ("/")
   root 'home#index'
 end
