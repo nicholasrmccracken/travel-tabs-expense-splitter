@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :owned_trips, class_name: 'Trip', foreign_key: 'owner_id', dependent: :destroy
 
   # User can participate in many trips through Participant
-  has_many :participants, class_name: 'Participant', dependent: :destroy
+  has_many :participants, dependent: :destroy
   has_many :trips, through: :participants
 
   # User can create many expenses

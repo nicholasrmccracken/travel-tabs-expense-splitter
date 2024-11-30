@@ -1,4 +1,4 @@
-# SplitBuddy
+# TravelTabs
 
 Project Description
 
