@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_241_122_191_129) do
+ActiveRecord::Schema[7.0].define(version: 20_241_127_225_023) do
+  create_table 'expense_participants', force: :cascade do |t|
+    t.integer 'expense_id', null: false
+    t.integer 'user_id', null: false
+    t.decimal 'share', precision: 10, scale: 2
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['expense_id'], name: 'index_expense_participants_on_expense_id'
+    t.index ['user_id'], name: 'index_expense_participants_on_user_id'
+  end
+
   create_table 'expenses', force: :cascade do |t|
     t.string 'description'
     t.decimal 'amount'
@@ -28,6 +38,17 @@ ActiveRecord::Schema[7.0].define(version: 20_241_122_191_129) do
     t.integer 'user_id', null: false
     t.index ['expense_id'], name: 'index_expenses_users_on_expense_id'
     t.index ['user_id'], name: 'index_expenses_users_on_user_id'
+  end
+
+  create_table 'leaguers', force: :cascade do |t|
+    t.integer 'trip_id', null: false
+    t.integer 'user_id', null: false
+    t.decimal 'amount_owed'
+    t.decimal 'amount_paid'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['trip_id'], name: 'index_leaguers_on_trip_id'
+    t.index ['user_id'], name: 'index_leaguers_on_user_id'
   end
 
   create_table 'participants', force: :cascade do |t|
@@ -62,8 +83,12 @@ ActiveRecord::Schema[7.0].define(version: 20_241_122_191_129) do
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
+  add_foreign_key 'expense_participants', 'expenses'
+  add_foreign_key 'expense_participants', 'users'
   add_foreign_key 'expenses', 'trips'
   add_foreign_key 'expenses', 'users', column: 'creator_id'
+  add_foreign_key 'leaguers', 'trips'
+  add_foreign_key 'leaguers', 'users'
   add_foreign_key 'participants', 'trips'
   add_foreign_key 'participants', 'users'
   add_foreign_key 'trips', 'users', column: 'owner_id'
