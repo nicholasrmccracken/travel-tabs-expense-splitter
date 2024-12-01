@@ -35,15 +35,25 @@ class TripsController < ApplicationController
   end
 
   # GET /trips/:id/edit
-  # TODO: Create form to allow users to edit trips.
+  # Creates a form to edit an existing trip.
   def edit
-    # TODO: Implement
+    if @trip.user != current_user # only trip owner can edit trip # rubocop:disable Style/GuardClause
+      redirect_to trips_path, alert: 'You do not have permission to edit this trip.'
+    end
   end
 
   # PUT /trips/:id
-  # TODO: Edit trips.
+  # Updates trip once it has been edited.
   def update
-    # TODO: Implement
+    if @trip.user == current_user
+      if @trip.update(trip_params)
+        redirect_to @trip, notice: 'Trip was successfully updated.'
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      redirect_to trips_path, alert: 'You do not have permission to update this trip.'
+    end
   end
 
   # DELETE /trips/:id
