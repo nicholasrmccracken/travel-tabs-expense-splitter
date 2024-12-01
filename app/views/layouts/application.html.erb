@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
    
 
     <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
@@ -14,8 +15,11 @@
 
   <body class="bg-medium-brown">
 
+   <div class="test-bg">This is a Tailwind test</div>
+
+
     <!-- Navbar -->
-    <nav class="bg-blue-500 text-white shadow-md">
+    <nav class="primary-red text-white shadow-md">
       <div class="container mx-auto flex justify-between items-center p-4">
         <a href="/" class="text-2xl font-bold hover:text-gray-200">SplitBuddy</a>
         <div class="flex space-x-4 items-center">
