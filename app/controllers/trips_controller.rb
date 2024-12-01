@@ -57,6 +57,16 @@ class TripsController < ApplicationController
     end
   end
 
+  # Removed participant from trip.
+  def leave
+    if @trip.users.include?(current_user)
+      @trip.users.delete(current_user)
+      redirect_to trips_path, notice: 'You have left the trip.'
+    else
+      redirect_to trips_path, alert: 'You do not have permission to leave this trip.'
+    end
+  end
+
   private
 
   # Strong parameters for trip.
