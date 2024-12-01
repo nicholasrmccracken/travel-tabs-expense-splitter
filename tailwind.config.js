@@ -4,15 +4,6 @@ module.exports = {
   content: [
     './public/*.html',
     './app/helpers/**/*.rb',
-<<<<<<< HEAD
-    './app/assets/stylesheets/**/*.css',
-    './app/javascript/**/*.js'
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-=======
     './app/javascript/**/*.js',
     './app/views/**/*.{erb,haml,html,slim}'
   ],
@@ -41,5 +32,4 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
   ]
->>>>>>> d5092061a18262d1446a21b6b18bfe9f36b84d8a
 }
