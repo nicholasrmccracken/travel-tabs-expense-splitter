@@ -5,8 +5,6 @@ Rails.application.routes.draw do
     member do
       delete :leave
     end
-
-    resources :expenses
   end
 
   root 'trips#index'

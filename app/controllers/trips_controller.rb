@@ -5,7 +5,7 @@ class TripsController < ApplicationController
   # GET /trips
   # Displays a list of trips for the current user.
   def index
-    @trips = Trip.all
+    @trips = current_user.trips + current_user.owned_trips
   end
 
   # GET /trips/:id
@@ -83,7 +83,7 @@ class TripsController < ApplicationController
   #
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def trip_params
-    params.require(:trip).permit(:name, :description, :start_date, :end_date, participant_ids: [])
+    params.require(:trip).permit(:name, :description, :start_date, :end_date)
   end
 
   # Adds participants to the trip.

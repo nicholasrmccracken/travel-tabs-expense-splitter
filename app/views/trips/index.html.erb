@@ -1,8 +1,6 @@
 <h1 class="text-3xl font-semibold text-gray-800 mb-6">All Trips</h1>
 
-<% if @trips.empty? %>
-  <p class="text-md text-gray-600">No trips found.</p>
-<% else %>
+<% if @trips.any? %>
   <ul class="space-y-4">
     <% @trips.each do |trip| %>
       <li class="border-b border-gray-200 pb-4 mb-4">
@@ -10,10 +8,12 @@
         <p class="text-md text-gray-600"><%= trip.description %></p>
         <p class="text-sm text-gray-500">Start Date: <%= trip.start_date %></p>
         <p class="text-sm text-gray-500">End Date: <%= trip.end_date %></p>
-        <p class="text-sm text-gray-500">Owner ID: <%= trip.owner_id %></p>
+        <p class="text-sm text-gray-500">Owner: <%= trip.user.email %></p>
       </li>
     <% end %>
   </ul>
+<% else %>
+  <p class="text-md text-gray-600">No trips found.</p>
 <% end %>
 
 <%= link_to 'Create New Trip', new_trip_path, class: "text-white bg-blue-500 p-2 rounded hover:bg-blue-600" %>
