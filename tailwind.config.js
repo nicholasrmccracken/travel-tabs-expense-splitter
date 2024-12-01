@@ -21,6 +21,18 @@ module.exports = {
 
         'button-red': '#ef4444',
         'button-hover-red': '#b91c1c',
+
+        'dark-logo': '#5e2807',
+        'light-logo': '#f2dfc9',
+  
+        'red-accent': '#BF0000',
+        'green-accent': '#64C7A0',
+  
+        'pale-brown': '#d0b8b2',
+        'light-brown': '#AD7064',
+
+        'medium-brown': '#7B554D',
+        'dark-brown': '#2E0B05',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
