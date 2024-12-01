@@ -25,10 +25,10 @@ module.exports = {
         dark_logo: '#5e2807',
         light_logo: '#f2dfc9',
   
-        red_accent: '#BF0000',
-        green_accent: '#64C7A0',
+        accent_red: '#bf0000',
+        accent_green: '#64c7A0',
 
-        off_white: '#d0b8b2',
+        pale_brown: '#d0b8b2',
         light_brown: '#AD7064',
         medium_brown: '#7B554D',
         dark_brown: '#2E0B05',
