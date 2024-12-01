@@ -4,11 +4,11 @@
 <table class="table-auto w-full border-collapse border border-medium_brown">
   <thead>
     <tr class="bg-pale_brown">
-      <th class="border border-medium_brown px-4 py-2 text-left text-dark_logo">Name</th>
-      <th class="border border-medium_brown px-4 py-2 text-left text-dark_logo">Description</th>
-      <th class="border border-medium_brown px-4 py-2 text-left text-dark_logo">Start Date</th>
-      <th class="border border-medium_brown px-4 py-2 text-left text-dark_logo">End Date</th>
-      <th class="border border-medium_brown px-4 py-2 text-left text-dark_logo">Owner</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Name</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Description</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Start Date</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">End Date</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Owner</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +19,7 @@
           <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.description %></td>
           <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.start_date %></td>
           <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.end_date %></td>
-          <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.user.email %></td>
+          <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.owner.email %></td>
         </tr>
       <% end %>
     <% else %>
