@@ -33,4 +33,9 @@ class User < ApplicationRecord
     leaguer = Leaguer.find_by(trip: trip, user: self)
     leaguer&.amount_paid || 0.0
   end
+
+  # This method returns an array of trip ids the user is a participant in
+  def participant_trip_ids
+    participating_trips.pluck(:id)
+  end
 end

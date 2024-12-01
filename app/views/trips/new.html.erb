@@ -37,8 +37,8 @@
       <div class="space-y-2">
         <% @users.each do |user| %>
           <div class="flex items-center">
-            <%= check_box_tag "trip[participant_ids][]", user.id, false, id: "participant_#{user.id}", class: "h-4 w-4 text-blue-600 focus:ring focus:ring-secondary-red rounded" %>
-            <%= label_tag "participant_#{user.id}", user.name, class: "ml-2 text-gray-700" %>
+            <%= check_box_tag "trip[participant_ids][]", user.id, @trip.participant_ids.include?(user.id), id: "participant_#{user.id}", class: "h-4 w-4 text-blue-600 focus:ring focus:ring-secondary-red rounded" %>
+            <%= label_tag "participant_#{user.id}", user.email, class: "ml-2 text-gray-700" %>
           </div>
         <% end %>
       </div>
