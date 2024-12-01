@@ -4,5 +4,13 @@ module.exports = {
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js'
-  ]
+  ],
+  theme: {
+    extends: {
+    colors: {
+      'purple': '#3f3cbb',
+    },
+  }
+    },
+  plugins: [],
 }

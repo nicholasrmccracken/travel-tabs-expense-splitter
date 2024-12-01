@@ -75,3 +75,5 @@ gem 'cssbundling-rails'
 gem 'rubocop', '~> 1.68'
 
 gem 'devise', '~> 4.9'
+
+gem "tailwindcss-rails", "~> 3.0"
