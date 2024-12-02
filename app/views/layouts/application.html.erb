@@ -37,13 +37,10 @@
 
       <%= yield %>
     <% else %>
-      <div class="flex justify-center items-center min-h-screen bg-pale_brown">
-        <div class="bg-light_brown p-8 rounded-lg shadow-lg w-full max-w-md">
-          <p class="notice"><%= notice %></p>
-          <p class="alert"><%= alert %></p>
-
-          <%= yield %>
-        </div>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      <div class="flex justify-center items-center min-h-screen bg-pale_brown"> 
+        <%= yield %>
       </div>
     <% end %>
   </body>
