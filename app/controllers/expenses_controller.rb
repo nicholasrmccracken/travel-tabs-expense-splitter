@@ -18,7 +18,7 @@ class ExpensesController < ApplicationController
   # Initializes a new expense.
   def new
     # Only trip owner and participants can create an expense
-    unless @trip.user == current_user || @trip.users.include?(current_user)
+    unless @trip.owner == current_user || @trip.users.include?(current_user)
       redirect_to @trip, alert: 'You are not authorized to add expenses for this trip.'
     end
     @expense = @trip.expenses.build
@@ -28,14 +28,23 @@ class ExpensesController < ApplicationController
   # POST /trips/:trip_id/expenses
   # Creates a new expense for a trip.
   def create
+    @trip = Trip.find(params[:trip_id])
     @expense = @trip.expenses.build(expense_params)
-    @expense.user = current_user
+
+    # Add participants to share the expense
     if @expense.save
-      add_shared_users(@expense, params[:expense][:user_ids]) # add other users to share the expense
-      redirect_to @trip, notice: 'Expense successfully added.'
+      # Handle the creation of associated participants if checkboxes are selected
+      if params[:expense][:expense_participants_attributes].present?
+        params[:expense][:expense_participants_attributes].each_value do |participant_params|
+          user = User.find(participant_params[:user_id])
+          @expense.expense_participants.create(user: user, share: participant_params[:share])
+        end
+      end
+
+      redirect_to trip_expenses_path(@trip), notice: 'Expense created successfully.'
     else
-      @users = @trip.users.where.not(id: current_user.id)
-      render :new, status: :unprocessable_entity
+      logger.debug @expense.errors.full_messages
+      redirect_to trip_expenses_path(@trip), notice: 'Expense not created.'
     end
   end
 
@@ -85,7 +94,7 @@ class ExpensesController < ApplicationController
   #
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date, user_ids: [])
+    params.require(:expense).permit(:description, :amount, :date, expense_participants_attributes: %i[user_id share])
   end
 
   def set_trip
@@ -94,12 +103,5 @@ class ExpensesController < ApplicationController
 
   def set_expense
     @expense = @trip.expenses.find(params[:id])
-  end
-
-  def add_shared_users(expense, user_ids)
-    return if user_ids.blank? # no added users
-
-    users = User.find(user_ids)
-    expense.users << users
   end
 end
