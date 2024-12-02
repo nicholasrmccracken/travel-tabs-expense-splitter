@@ -1,0 +1,42 @@
+<div class="max-w-xl mx-auto mt-6 bg-white shadow-md rounded-lg p-4">
+  <%= form_with model: [@trip, @expense], local: true, class: "space-y-4" do |form| %>
+
+    <!-- Description -->
+    <div class="flex flex-col">
+      <%= form.label :description, "Expense Description", class: "mb-1 font-medium text-gray-700" %>
+      <%= form.text_field :description, class: "bg-gray-50 border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-300 focus:outline-none" %>
+    </div>
+
+    <!-- Amount -->
+    <div class="flex flex-col">
+      <%= form.label :amount, "Amount", class: "mb-1 font-medium text-gray-700" %>
+      <%= form.number_field :amount, step: 0.01, class: "bg-gray-50 border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-300 focus:outline-none" %>
+    </div>
+
+    <!-- Date -->
+    <div class="flex flex-col">
+      <%= form.label :date, "Expense Date", class: "mb-1 font-medium text-gray-700" %>
+      <%= form.date_field :date, class: "bg-gray-50 border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-300 focus:outline-none" %>
+    </div>
+
+    <!-- Shared Users -->
+    <div class="flex flex-col">
+      <%= form.label :user_ids, "Shared With", class: "mb-1 font-medium text-gray-700" %>
+      <div class="space-y-2">
+        <%= form.fields_for :expense_participants do |participant_form| %>
+          <% @trip.users.each do |user| %>
+            <div class="flex items-center">
+              <%= check_box_tag "expense[user_ids][]", user.id, false, id: "participant_#{user.id}" %>
+              <%= label_tag "participant_#{user.id}", user.email, class: "ml-2 text-gray-800" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+      <%= form.submit class: "w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none" %>
+    </div>
+  <% end %>
+</div>

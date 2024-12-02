@@ -1,6 +1,3 @@
-<!-- COMMENT TO DELETE: I generated these classes we will have to change these later -->
-
-
 <div class="max-w-3xl mx-auto mt-10 bg-light-brown shadow-md rounded-lg p-6">
   <%= form_with model: @trip, local: true, class: "space-y-4" do |form| %>
 
@@ -43,7 +40,7 @@
 
     <!-- Submit Button -->
     <div>
-      <%= form.submit @trip.new_record? ? "Create Trip" : "Update Trip", class: "w-full bg-dark-logo text-background-grey px-4 py-2 rounded hover:bg-button-light-logo focus:ring focus:ring-secondary-red focus:outline-none" %>
+      <%= form.submit @trip.new_record? ? "Create Trip" : "Update Trip", class: "w-full bg-off_white text-background-grey px-4 py-2 rounded hover:bg-button-off_white focus:ring focus:ring-secondary-red focus:outline-none" %>
     </div>
 
   <% end %>

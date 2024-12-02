@@ -22,8 +22,8 @@ module.exports = {
         'button-red': '#ef4444',
         'button-hover-red': '#b91c1c',
 
-        'dark_logo': '#5e2807',
-        'light_logo': '#f2dfc9',
+        primary: '#5e2807', // dark logo
+        off_white: '#f2f0ef', // light logo color
   
         'accent_red': '#bf0000',
         'accent_green': '#64c7A0',
@@ -39,6 +39,9 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
+      backgroundImage: {
+        'logo': "url('/assets/light_logo.png')",
       },
     },
   },

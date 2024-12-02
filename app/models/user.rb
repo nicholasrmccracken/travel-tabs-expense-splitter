@@ -18,10 +18,6 @@ class User < ApplicationRecord
   has_many :expense_participants, dependent: :destroy
   has_many :shared_expenses, through: :expense_participants, source: :expense
 
-  # User can pay debts through trips
-  has_many :leaguers, dependent: :destroy
-  has_many :trips, through: :leaguers
-
   # Calculate amount owed based on share of expenses
   def total_owed_for_trip(trip)
     leaguer = Leaguer.find_by(trip: trip, user: self)

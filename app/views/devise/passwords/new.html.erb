@@ -1,0 +1,22 @@
+<div class="bg-light_brown p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col items-center justify-between h-full">
+  <h2 class="text-2xl text-dark_brown underlined">Forgot your password?</h2>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email, class: "text-dark_brown text-1xl mt-2" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+    <div class="actions flex justify-center mt-4">
+      <%= f.submit "Send me sign in instructions", class: "text-1x1 bg-medium_brown text-dark_brown p-4 rounded-lg w-30 hover:underline"  %>
+    </div>
+<% end %>
+
+  <div class="flex justify-center items-center h-full">
+    <div class="text-center">
+      <%= render "devise/shared/links", class: "text-2x1  text-dark_brown hover:underline px-4" %>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :trips, only: %i[index show new create edit update destroy] do
     member do
-      delete :leave
+      post :leave
     end
   end
 
