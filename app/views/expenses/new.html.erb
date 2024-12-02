@@ -1,0 +1,3 @@
+<h1 class="text-lg font-bold text-gray-800">Add Expense to <%= @trip.name %></h1>
+<%= render 'form', trip: @trip, expense: @expense %>
+<%= link_to 'Back to Trip', @trip, class: 'mt-4 inline-block text-blue-500 hover:underline' %>

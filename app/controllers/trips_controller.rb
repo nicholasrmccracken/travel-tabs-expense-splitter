@@ -12,6 +12,7 @@ class TripsController < ApplicationController
   # Displays a specific trip.
   def show
     @trip = Trip.find(params[:id])
+    @total_expenses = @trip.expenses.sum(:amount)
   end
 
   # GET /trips/new
@@ -68,8 +69,8 @@ class TripsController < ApplicationController
     end
   end
 
-  # DELETE /trips/:id/leave
-  # Removes the current user from the trip participants.
+  # POST /trips/:trip_id/
+  # Removed participant from trip.
   def leave
     if @trip.users.include?(current_user)
       @trip.users.delete(current_user)
