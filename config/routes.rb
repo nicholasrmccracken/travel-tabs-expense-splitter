@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   get 'pages/about'
   devise_for :users
 
-
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
   get '/about', to: 'pages#about', as: 'about'
 
@@ -13,4 +12,3 @@ Rails.application.routes.draw do
 
   root 'trips#index'
 end
-
