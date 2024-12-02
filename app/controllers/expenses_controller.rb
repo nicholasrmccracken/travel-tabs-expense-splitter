@@ -7,7 +7,8 @@ class ExpensesController < ApplicationController
   # GET /trips/:trip_id/expenses
   # Displays a list of expenses for the current user's trips.
   def index
-    @expenses = @trip.expenses.includes(:users)
+    # @expenses = @trip.expenses.includes(:users)
+    @trips = current_user.trips.includes(:expenses)
   end
 
   # GET /trips/:trip_id/expenses/:id
