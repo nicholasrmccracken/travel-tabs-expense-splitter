@@ -1,19 +1,33 @@
-<h1 class="text-3xl font-semibold text-gray-800 mb-6">All Trips</h1>
-
-<% if @trips.any? %>
-  <ul class="space-y-4">
-    <% @trips.each do |trip| %>
-      <li class="border-b border-gray-200 pb-4 mb-4">
-        <h2 class="text-2xl font-semibold text-gray-800"><%= link_to trip.name, trip %></h2>
-        <p class="text-md text-gray-600"><%= trip.description %></p>
-        <p class="text-sm text-gray-500">Start Date: <%= trip.start_date %></p>
-        <p class="text-sm text-gray-500">End Date: <%= trip.end_date %></p>
-        <p class="text-sm text-gray-500">Owner: <%= trip.user.email %></p>
-      </li>
+<div>
+  <h1 class="text-3xl font-semibold text-gray-800 mb-6">All Trips</h1>
+</div>
+<table class="table-auto w-full border-collapse border border-medium_brown">
+  <thead>
+    <tr class="bg-pale_brown">
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Name</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Description</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Start Date</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">End Date</th>
+      <th class="border border-medium_brown px-4 py-2 text-left text-primary">Owner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @trips.any? %>
+      <% @trips.each do |trip| %>
+        <tr class="hover:bg-light_brown">
+          <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= link_to trip.name, trip %></td>
+          <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.description %></td>
+          <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.start_date %></td>
+          <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.end_date %></td>
+          <td class="border border-medium_brown px-4 py-2 text-dark_brown"><%= trip.owner.email %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td class="border border-medium_brown px-4 py-2 text-center text-light_brown" colspan="5">No trips found.</td>
+      </tr>
     <% end %>
-  </ul>
-<% else %>
-  <p class="text-md text-gray-600">No trips found.</p>
-<% end %>
+  </tbody>
+</table>
 
-<%= link_to 'Create New Trip', new_trip_path, class: "text-white bg-blue-500 p-2 rounded hover:bg-blue-600" %>
+<%= link_to 'Create New Trip', new_trip_path, class: "text-3x1 text-white bg-blue-500 p-2 rounded hover:bg-blue-600" %>
