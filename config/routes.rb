@@ -6,9 +6,14 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#about', as: 'about'
 
   resources :trips do
-    resources :expenses, only: %i[index show new create edit update destroy]
+    resources :expenses do
+      post 'leave', on: :member, to: 'expenses#leave', as: 'leave'
+    end
+
+    member do
+      post :leave
+    end
   end
-  
 
   root 'trips#index'
 end
