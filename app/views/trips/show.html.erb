@@ -60,12 +60,15 @@
     <div class="mt-6">
       <%= link_to 'Delete Trip', @trip, method: :delete, data: { confirm: 'Are you sure you want to delete this trip?' }, class: 'text-red-500 hover:underline' %>
     </div>
-  <% end %>
-
-  <!-- Leave Trip Button -->
-  <% if @trip.owner != current_user && @trip.participants.include?(current_user) %>
+  <% elsif @trip.users.include?(current_user) %>
+    <!-- Leave Trip Button -->
     <div class="mt-6">
       <%= link_to 'Leave Trip', leave_trip_path(@trip), method: :delete, data: { confirm: 'Are you sure you want to leave this trip?' }, class: 'text-red-500 hover:underline' %>
     </div>
   <% end %>
+
+    <!-- Back Link -->
+  <div class="mt-4">
+    <%= link_to "Back to Trips", trips_path, class: "text-dark_log hover:underline hover:text-light_brown" %>
+  </div>
 </div>

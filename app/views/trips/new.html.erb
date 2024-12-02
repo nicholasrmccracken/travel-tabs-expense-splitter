@@ -32,7 +32,7 @@
     <div class="flex flex-col">
       <%= form.label :participant_ids, "Participants", class: "mb-1 font-medium text-medium_brown" %>
       <div class="space-y-2">
-        <% @users.each do |user| %>
+        <% @all_users.each do |user| %>
           <div class="flex items-center">
             <%= check_box_tag "trip[participant_ids][]", user.id, @trip.participant_ids.include?(user.id), id: "participant_#{user.id}", class: "h-4 w-4 text-blue-600 focus:ring focus:ring-secondary-red rounded" %>
             <%= label_tag "participant_#{user.id}", user.email, class: "ml-2 text-medium_brown" %>
@@ -53,4 +53,3 @@
     <%= link_to "Back to Trips", trips_path, class: "text-dark_log hover:underline hover:text-light_brown" %>
   </div>
 </div>
-<%= render 'form' %>
