@@ -43,7 +43,7 @@ class ExpensesController < ApplicationController
   # GET /trips/:trip_id/expenses/:id/edit
   # Creates form to edit an existing expense for a trip.
   def edit
-    unless @trip.user == current_user || @trip.users.include?(current_user) # rubocop:disable Style/GuardClause
+    unless @trip.owner == current_user || @trip.users.include?(current_user) # rubocop:disable Style/GuardClause
       redirect_to @trip, alert: 'You are not authorized to edit this expense.'
     end
   end
@@ -61,7 +61,7 @@ class ExpensesController < ApplicationController
   # DELETE /trips/:trip_id/expenses/:id
   # Deletes an expense if current user is the owner.
   def destroy
-    if @trip.user == current_user # only trip owner can delete an expense
+    if @trip.owner == current_user # only trip owner can delete an expense
       @expense.destroy
       redirect_to @trip, notice: 'Expense was successfully deleted.'
     else
