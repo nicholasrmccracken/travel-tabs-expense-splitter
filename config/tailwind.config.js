@@ -22,16 +22,20 @@ module.exports = {
         'button-red': '#ef4444',
         'button-hover-red': '#b91c1c',
 
-        dark_logo: '#5e2807',
-        light_logo: '#f2dfc9',
+        'dark_logo': '#5e2807',
+        'light_logo': '#f2dfc9',
   
-        accent_red: '#bf0000',
-        accent_green: '#64c7A0',
+        'accent_red': '#bf0000',
+        'accent_green': '#64c7A0',
 
-        pale_brown: '#d0b8b2',
-        light_brown: '#AD7064',
-        medium_brown: '#7B554D',
-        dark_brown: '#2E0B05',
+        'pale_brown': '#d0b8b2',
+        'light_brown': '#AD7064',
+        'medium_brown': '#7B554D',
+        'dark_brown': '#2E0B05',
+
+        'scarlet-red': '#BB0000',
+        'gray': '#666666',
+        'light-gray': '#CCCCCC',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
