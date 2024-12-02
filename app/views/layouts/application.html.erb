@@ -39,8 +39,13 @@
     <% else %>
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
-      <div class="flex justify-center items-center min-h-screen bg-pale_brown"> 
-        <%= yield %>
+      <div class="flex justify-center items-center flex-col min-h-screen bg-pale_brown"> 
+         <div class="mb-4">
+          <img src="<%= asset_path('dark_logo.png') %>" alt="Description of image" class="w-80 h-auto" />
+        </div>
+        <div>
+          <%= yield %>
+        </div>
       </div>
     <% end %>
   </body>
