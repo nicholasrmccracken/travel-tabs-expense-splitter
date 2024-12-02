@@ -33,10 +33,10 @@ class ExpensesController < ApplicationController
     # Add participants to share the expense
     if @expense.save
       create_expense_participants
-      redirect_to trip_expenses_path(@trip), notice: 'Expense created successfully.'
+      redirect_to trip_path(@trip), notice: 'Expense created successfully.'
     else
       logger.debug @expense.errors.full_messages
-      redirect_to trip_expenses_path(@trip), notice: 'Expense not created.'
+      redirect_to trip_path(@trip), notice: 'Expense not created.'
     end
   end
 
