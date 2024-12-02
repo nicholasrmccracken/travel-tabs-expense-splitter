@@ -19,6 +19,7 @@ class TripsController < ApplicationController
   # Initializes a new trip and loads users for participant selection.
   def new
     @trip = Trip.new
+    @expense = @trip.expenses.build
   end
 
   # POST /trips
@@ -111,12 +112,18 @@ class TripsController < ApplicationController
   # @param trip [Trip] The trip to add participants to.
   # @param participant_ids [Array<Integer>] Array of user IDs to add as participants.
   def add_participants(trip, participant_ids)
-    return unless participant_ids.present?
+    return unless participant_ids.present? || trip.owner.present?
 
+    # Ensure the owner is included in the participant IDs
+    participant_ids ||= []
+    participant_ids << trip.owner.id if trip.owner && !participant_ids.include?(trip.owner.id)
+
+    # Filter for valid user IDs
     valid_user_ids = User.where(id: participant_ids).pluck(:id)
 
+    # Add each valid user as a participant
     valid_user_ids.each do |user_id|
-      trip.participants.create(user_id: user_id)
+      trip.participants.find_or_create_by(user_id: user_id)
     end
   end
 end
