@@ -9,7 +9,7 @@
     <%= stylesheet_link_tag "application.tailwind", media: "all", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-</html>
+
 
   <body class="bg-off_white">
   <body>
@@ -28,6 +28,15 @@
             <%= link_to 'Sign Up', new_user_registration_path, class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown" %>
           <% end %>
         </div>
+
+         <!-- Hamburger Menu -->
+    <div class="lg:hidden">
+      <button id="menu-toggle" class="text-white focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
       </div>
     </nav>
     <% if user_signed_in? %>
