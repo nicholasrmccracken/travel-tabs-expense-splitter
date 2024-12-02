@@ -23,6 +23,40 @@
     <% end %>
   </ul>
 
+  <!-- Expenses Section -->
+  <h2>Total Expenses</h2>
+  <p><%= number_to_currency(@total_expenses) %></p><br>
+  <h2 class="mt-6 text-lg font-bold">Expenses</h2>
+  <div class="mt-4">
+    <% if @trip.expenses.any? %>
+      <ul class="space-y-2">
+        <% @trip.expenses.each do |expense| %>
+          <li class="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
+            <div>
+              <p class="font-bold"><%= expense.description %></p>
+              <p class="text-sm text-gray-600">Amount: <%= number_to_currency(expense.amount) %></p>
+              <p class="text-sm text-gray-600">Date: <%= expense.date %></p>
+              <p class="text-sm text-gray-600">Shared by: <%= expense.users.map(&:email).join(", ") %></p>
+            </div>
+            <div class="flex space-x-2">
+              <% if @trip.user == current_user || expense.user == current_user %>
+                <%= link_to 'Edit', edit_trip_expense_path(@trip, expense), class: 'text-blue-500 hover:underline' %>
+                <%= link_to 'Delete', trip_expense_path(@trip, expense), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:underline' %>
+              <% end %>
+              <% if expense.users.include?(current_user) && expense.user != current_user %>
+                <%= link_to 'Leave', leave_trip_expense_path(@trip, expense), method: :post, data: { confirm: 'Are you sure you want to leave this expense?' }, class: 'text-yellow-500 hover:underline' %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No expenses added yet.</p>
+    <% end %>
+  </div>
+
+  <%= link_to 'Add Expense', new_trip_expense_path(@trip), class: 'mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600' %>
+
   <!-- Delete Button -->
   <% if @trip.user == current_user %>
     <div class="mt-6">
