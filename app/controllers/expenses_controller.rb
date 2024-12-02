@@ -11,10 +11,6 @@ class ExpensesController < ApplicationController
     @trips = current_user.trips.includes(:expenses)
   end
 
-  # GET /trips/:trip_id/expenses/:id
-  def show
-  end
-
   # GET /trips/:trip_id/expenses/new
   # Initializes a new expense.
   def new

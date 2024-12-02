@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gap: {
+        '10p': '10%',
+      },
       colors: {
         'primary-red': '#991b1b',
         'secondary-red': '#f87171',
