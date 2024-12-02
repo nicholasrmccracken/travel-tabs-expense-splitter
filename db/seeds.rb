@@ -49,10 +49,10 @@ expense3 = Expense.create!(
   trip: trip2
 )
 
-expense1.shared_users << user1
-expense1.shared_users << user2
-expense2.shared_users << user1
-expense3.shared_users << user2
+expense1.users << user1
+expense1.users << user2
+expense2.users << user1
+expense3.users << user2
 
 Expense.create!(
   description: 'Hotel in New York',

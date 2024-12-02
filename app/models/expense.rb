@@ -17,7 +17,7 @@ class Expense < ApplicationRecord
   def update_leagures_for_shared_users
     users.each do |user|
       # Calculate the share for each user
-      share = amount / shared_users.count
+      share = amount / users.count
       ExpenseParticipant.create(expense: self, user: user, share: share)
 
       # Update the Leaguer model to reflect the amount each user owes

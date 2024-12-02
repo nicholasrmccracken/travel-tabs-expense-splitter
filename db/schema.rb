@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_27_225023) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_02_053101) do
   create_table "expense_participants", force: :cascade do |t|
     t.integer "expense_id", null: false
     t.integer "user_id", null: false
@@ -40,22 +40,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_27_225023) do
     t.index ["user_id"], name: "index_expenses_users_on_user_id"
   end
 
-  create_table "leaguers", force: :cascade do |t|
-    t.integer "trip_id", null: false
-    t.integer "user_id", null: false
-    t.decimal "amount_owed"
-    t.decimal "amount_paid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["trip_id"], name: "index_leaguers_on_trip_id"
-    t.index ["user_id"], name: "index_leaguers_on_user_id"
-  end
-
   create_table "participants", force: :cascade do |t|
     t.integer "trip_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "amount_owed", default: "0.0"
+    t.decimal "amount_paid", default: "0.0"
     t.index ["trip_id", "user_id"], name: "index_participants_on_trip_id_and_user_id", unique: true
     t.index ["trip_id"], name: "index_participants_on_trip_id"
     t.index ["user_id"], name: "index_participants_on_user_id"
@@ -88,8 +79,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_27_225023) do
   add_foreign_key "expense_participants", "users"
   add_foreign_key "expenses", "trips"
   add_foreign_key "expenses", "users", column: "creator_id"
-  add_foreign_key "leaguers", "trips"
-  add_foreign_key "leaguers", "users"
   add_foreign_key "participants", "trips"
   add_foreign_key "participants", "users"
   add_foreign_key "trips", "users", column: "owner_id"

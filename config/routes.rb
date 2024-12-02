@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get 'pages/about'
   devise_for :users
 
+  get 'pages/about'
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
   get '/about', to: 'pages#about', as: 'about'
 

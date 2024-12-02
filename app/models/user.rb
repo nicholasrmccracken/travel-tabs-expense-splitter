@@ -20,13 +20,13 @@ class User < ApplicationRecord
 
   # Calculate amount owed based on share of expenses
   def total_owed_for_trip(trip)
-    leaguer = Leaguer.find_by(trip: trip, user: self)
+    leaguer = Participant.find_by(trip: trip, user: self)
     leaguer&.amount_owed || 0.0
   end
 
   # Calculate amount user has payed off
   def total_paid_for_trip(trip)
-    leaguer = Leaguer.find_by(trip: trip, user: self)
+    leaguer = Participant.find_by(trip: trip, user: self)
     leaguer&.amount_paid || 0.0
   end
 end
