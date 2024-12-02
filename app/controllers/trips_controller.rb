@@ -1,5 +1,6 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_trip, only: %i[show edit update destroy leave]
   before_action :load_users, only: %i[new create]
 
   # GET /trips
@@ -11,7 +12,6 @@ class TripsController < ApplicationController
   # GET /trips/:id
   # Displays a specific trip.
   def show
-    @trip = Trip.find(params[:id])
     @total_expenses = @trip.expenses.sum(:amount)
   end
 
@@ -62,8 +62,11 @@ class TripsController < ApplicationController
   # Deletes a trip if the current user is the owner.
   def destroy
     if @trip.owner == current_user # only trip owner can delete trip
-      @trip.destroy
-      redirect_to trips_path, notice: 'Trip was successfully deleted.'
+      if @trip.destroy
+        redirect_to trips_path, notice: 'Trip was successfully deleted.'
+      else
+        redirect_to trips_path, alert: 'Failed to delete trip.'
+      end
     else
       redirect_to trips_path, alert: 'You do not have permission to delete this trip.'
     end
@@ -87,6 +90,14 @@ class TripsController < ApplicationController
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def trip_params
     params.require(:trip).permit(:name, :description, :start_date, :end_date)
+  end
+
+  # Sets the @trip instance variable based on the trip ID from the parameters.
+  #
+  # @return [Trip] The trip instance corresponding to the provided ID.
+  # @raise [ActiveRecord::RecordNotFound] If no trip is found with the provided ID.
+  def set_trip
+    @trip = Trip.find(params[:id])
   end
 
   # Loads all users except the current user.
