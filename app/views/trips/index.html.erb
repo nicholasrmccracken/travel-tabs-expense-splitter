@@ -1,5 +1,5 @@
-<div>
-  <h1 class="text-3xl font-semibold text-gray-800 mb-6">All Trips</h1>
+<div class="flex justify-center mt-4">
+  <h1 class="text-3xl font-semibold text-dark_brown mb-6">All Trips</h1>
 </div>
 <table class="table-auto w-full border-collapse border border-medium_brown">
   <thead>
@@ -29,5 +29,6 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to 'Create New Trip', new_trip_path, class: "text-3x1 text-white bg-blue-500 p-2 rounded hover:bg-blue-600" %>
+<div class="mt-4">
+  <%= link_to 'Create New Trip', new_trip_path, class: "text-3x1 text-off_white bg-dark_brown p-2 rounded hover:bg-medium_brown" %>
+</div>
