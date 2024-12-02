@@ -8,4 +8,7 @@ class Trip < ApplicationRecord
 
   # A Trip has many Expenses
   has_many :expenses, dependent: :destroy
+
+  validates :name, presence: true
+  validates :description, presence: true
 end

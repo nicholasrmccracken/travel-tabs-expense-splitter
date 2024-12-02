@@ -6,7 +6,7 @@ class TripsController < ApplicationController
   # GET /trips
   # Displays a list of trips for the current user.
   def index
-    @trips = current_user.trips + current_user.owned_trips
+    @trips = current_user.trips
   end
 
   # GET /trips/:id
@@ -31,7 +31,6 @@ class TripsController < ApplicationController
       add_participants(@trip, params[:trip][:participant_ids])
       redirect_to @trip, notice: 'Trip created successfully.'
     else
-      flash[:alert] = 'Error creating trip.'
       render :new, status: :unprocessable_entity
     end
   end
