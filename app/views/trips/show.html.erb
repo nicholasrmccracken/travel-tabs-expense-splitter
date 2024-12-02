@@ -37,7 +37,7 @@
     <% if @trip.expenses.any? %>
       <ul class="space-y-2">
         <% @trip.expenses.each do |expense| %>
-          <li class="flex items-center justify-between p-4 bg-dark_brown rounded-lg">
+          <li class="flex items-center justify-between p-4 bg-light_brown rounded-lg">
             <div>
               <p class="font-bold"><%= expense.description %></p>
               <p class="text-sm text-dark_brown">Amount: <%= number_to_currency(expense.amount) %></p>
@@ -64,7 +64,7 @@
   <!-- Edit & Delete Button -->
   <% if @trip.owner == current_user %>
     <div class="mt-6">
-      <%= link_to 'Edit Trip', edit_trip_path(@trip), class: 'text-blue-500 hover:underline' %>
+      <%= link_to 'Edit Trip', edit_trip_path(@trip), class: 'text-dark_brown hover:underline' %>
     </div>
     <div class="mt-6">
       <%= link_to 'Delete Trip', @trip, method: :delete, data: { confirm: 'Are you sure you want to delete this trip?' }, class: 'text-red-500 hover:underline' %>
