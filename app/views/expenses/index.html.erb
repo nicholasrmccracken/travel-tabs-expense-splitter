@@ -12,6 +12,7 @@
               <%= expense.description %>: 
               <span class="text-primary font-semibold"><%= number_to_currency(expense.amount) %></span>
             </p>
+            <p class="text-sm"><em><%= expense.category %></em></p>
           </div>
         <% end %>
       <% else %>

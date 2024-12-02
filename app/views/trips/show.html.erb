@@ -40,6 +40,7 @@
           <li class="flex items-center justify-between p-4 bg-light_brown rounded-lg">
             <div>
               <p class="font-bold"><%= expense.description %></p>
+              <p class="text-sm"><em><%= expense.category %></em></p>
               <p class="text-sm text-dark_brown">Amount: <%= number_to_currency(expense.amount) %></p>
               <p class="text-sm text-dark_brown">Date: <%= expense.date %></p>
               <p class="text-sm text-dark_brown">Shared by: <%= expense.users.map(&:email).join(", ") %></p>

@@ -43,11 +43,11 @@ Install all required gems by running the following command:
     bundler install
     ```
 
-4. **Run Rails Server:**  
+4. **Run Rails Server & Tailwind Watcher:**  
 Locally host the website on port 3000 by running the following command:
 
     ```bash
-    rails server
+    foreman start -f Procfile.dev
     ```
 
 5. **Access Site Locally:**  

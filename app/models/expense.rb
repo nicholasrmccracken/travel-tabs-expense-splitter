@@ -11,6 +11,9 @@ class Expense < ApplicationRecord
 
   after_create :update_leagures_for_shared_users
 
+  CATEGORIES = ['Entertainment', 'Food and Drink', 'Lodging', 'Other', 'Transportation'].freeze
+  validates :category, inclusion: { in: CATEGORIES }
+
   private
 
   # Update Expense model to track when payments are made

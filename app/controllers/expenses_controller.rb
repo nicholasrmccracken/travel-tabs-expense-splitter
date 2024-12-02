@@ -83,7 +83,7 @@ class ExpensesController < ApplicationController
   #
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date)
+    params.require(:expense).permit(:category, :description, :amount, :date)
   end
 
   def set_trip
