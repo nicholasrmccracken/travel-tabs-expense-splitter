@@ -61,20 +61,6 @@
     <% end %>
   </div>
 
-  <!-- Edit Button -->
-  <% if @trip.owner == current_user %>
-    <div class="mt-6">
-      <%= link_to 'Edit Trip', edit_trip_path(@trip), class: 'text-blue-500 hover:underline' %>
-    </div>
-  <% end %>
-
-  <!-- Edit Button -->
-  <% if @trip.owner == current_user %>
-    <div class="mt-6">
-      <%= link_to 'Edit Trip', edit_trip_path(@trip), class: 'text-blue-500 hover:underline' %>
-    </div>
-  <% end %>
-
   <!-- Edit & Delete Button -->
   <% if @trip.owner == current_user %>
     <div class="mt-6">
