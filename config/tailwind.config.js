@@ -36,6 +36,9 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        'logo': "url('/assets/light_logo.png')",
+      },
     },
   },
   plugins: [
