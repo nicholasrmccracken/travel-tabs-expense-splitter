@@ -26,8 +26,8 @@
         <%= form.fields_for :expense_participants do |participant_form| %>
           <% @trip.users.each do |user| %>
             <div class="flex items-center">
-              <%= participant_form.check_box :user_id, { multiple: true }, user.id, nil %>
-              <%= label_tag "user_#{user.id}", user.email, class: "ml-2 text-gray-700" %>
+              <%= check_box_tag "expense[user_ids][]", user.id, false, id: "participant_#{user.id}" %>
+              <%= label_tag "participant_#{user.id}", user.email, class: "ml-2 text-gray-800" %>
             </div>
           <% end %>
         <% end %>

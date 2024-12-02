@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   # Ensure user is logged in before interacting with their trips
   before_action :authenticate_user!
   before_action :set_trip
-  before_action :set_expense, only: %i[show edit update destroy leave]
+  before_action :set_expense, only: %i[show edit update destroy leave set_trip]
 
   # GET /trips/:trip_id/expenses
   # Displays a list of expenses for the current user's trips.
@@ -28,19 +28,11 @@ class ExpensesController < ApplicationController
   # POST /trips/:trip_id/expenses
   # Creates a new expense for a trip.
   def create
-    @trip = Trip.find(params[:trip_id])
-    @expense = @trip.expenses.build(expense_params)
+    @expense = @trip.expenses.build(expense_params.merge(creator_id: current_user.id))
 
     # Add participants to share the expense
     if @expense.save
-      # Handle the creation of associated participants if checkboxes are selected
-      if params[:expense][:expense_participants_attributes].present?
-        params[:expense][:expense_participants_attributes].each_value do |participant_params|
-          user = User.find(participant_params[:user_id])
-          @expense.expense_participants.create(user: user, share: participant_params[:share])
-        end
-      end
-
+      create_expense_participants
       redirect_to trip_expenses_path(@trip), notice: 'Expense created successfully.'
     else
       logger.debug @expense.errors.full_messages
@@ -94,7 +86,7 @@ class ExpensesController < ApplicationController
   #
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date, expense_participants_attributes: %i[user_id share])
+    params.require(:expense).permit(:description, :amount, :date)
   end
 
   def set_trip
@@ -103,5 +95,13 @@ class ExpensesController < ApplicationController
 
   def set_expense
     @expense = @trip.expenses.find(params[:id])
+  end
+
+  def create_expense_participants
+    return unless params[:expense][:user_ids].present?
+
+    params[:expense][:user_ids].each do |user_id|
+      @expense.expense_participants.create(user_id: user_id) unless user_id.blank?
+    end
   end
 end
