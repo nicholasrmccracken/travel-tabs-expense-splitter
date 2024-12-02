@@ -25,13 +25,17 @@ module.exports = {
         primary: '#5e2807', // dark logo
         off_white: '#f2f0ef', // light logo color
   
-        accent_red: '#bf0000',
-        accent_green: '#64c7A0',
+        'accent_red': '#bf0000',
+        'accent_green': '#64c7A0',
 
-        pale_brown: '#d0b8b2',
-        light_brown: '#AD7064',
-        medium_brown: '#7B554D',
-        dark_brown: '#2E0B05',
+        'pale_brown': '#d0b8b2',
+        'light_brown': '#AD7064',
+        'medium_brown': '#7B554D',
+        'dark_brown': '#2E0B05',
+
+        'scarlet-red': '#BB0000',
+        'gray': '#666666',
+        'light-gray': '#CCCCCC',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
