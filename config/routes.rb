@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :trips do
     resources :expenses do
       post 'leave', on: :member, to: 'expenses#leave', as: 'leave'
+      post :update_shares, on: :member
     end
 
     member do
