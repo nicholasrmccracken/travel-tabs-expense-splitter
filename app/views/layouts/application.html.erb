@@ -27,6 +27,7 @@
             <span class="text-dark_brown font-medium">Hello, <%= current_user.email %></span>
             <%= link_to 'My Trips', trips_path, class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %> 
             <%= link_to 'Expenses', trip_expenses_path(Trip.first), class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %>
+            <%= link_to "Edit Profile", edit_user_registration_path , class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
             <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
           <% else %>
             <%= link_to 'Sign In', new_user_session_path, class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
