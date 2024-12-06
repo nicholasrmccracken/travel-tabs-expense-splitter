@@ -15,5 +15,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'trips#index'
+  # Landing page route
+  root 'pages#landing'
 end

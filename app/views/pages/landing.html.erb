@@ -1,0 +1,11 @@
+<div class="bg-pale_brown min-h-screen flex flex-col justify-center items-center">
+  <h1 class="text-4xl font-bold text-dark_brown mb-4">Welcome to TravelTabs</h1>
+  <p class="text-lg text-dark_brown mb-6">
+    Organize your trip expenses effortlessly. Join us today!
+  </p>
+  <div class="flex space-x-4">
+    <%= link_to "Sign In", new_user_session_path, class: "px-6 py-2 bg-dark_brown text-light_brown rounded-md hover:bg-medium_brown" %>
+    <%= link_to "Sign Up", new_user_registration_path, class: "px-6 py-2 bg-dark_brown text-light_brown rounded-md hover:bg-medium_brown" %>
+    <%= link_to "Learn More", about_path, class: "px-6 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown" %>
+  </div>
+</div>
