@@ -26,6 +26,7 @@ trip2 = Trip.create!(
 
 # Create Expenses
 expense1 = Expense.create!(
+  category: 'Transportation',
   description: 'Flight to Paris',
   amount: 500.00,
   date: Date.new(2024, 4, 30),
@@ -34,6 +35,7 @@ expense1 = Expense.create!(
 )
 
 expense2 = Expense.create!(
+  category: 'Lodging',
   description: 'Hotel in Paris',
   amount: 1000.00,
   date: Date.new(2024, 5, 1),
@@ -42,6 +44,7 @@ expense2 = Expense.create!(
 )
 
 expense3 = Expense.create!(
+  category: 'Transportation',
   description: 'Flight to New York',
   amount: 400.00,
   date: Date.new(2024, 6, 14),
@@ -55,6 +58,7 @@ expense2.users << user1
 expense3.users << user2
 
 Expense.create!(
+  category: 'Lodging',
   description: 'Hotel in New York',
   amount: 800.00,
   date: Date.new(2024, 6, 15),

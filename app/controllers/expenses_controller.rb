@@ -102,7 +102,7 @@ class ExpensesController < ApplicationController
   #
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date, :share_type,
+    params.require(:expense).permit(:category, :description, :amount, :date, :share_type,
                                     expense_participants_attributes: %i[user_id share_value destroy])
   end
 

@@ -15,6 +15,9 @@ class Expense < ApplicationRecord
 
   accepts_nested_attributes_for :expense_participants, allow_destroy: true
 
+  CATEGORIES = ['Entertainment', 'Food and Drink', 'Lodging', 'Other', 'Transportation'].freeze
+  validates :category, inclusion: { in: CATEGORIES }
+
   private
 
   # Update Expense model to track when payments are made
