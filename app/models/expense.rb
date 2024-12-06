@@ -25,7 +25,7 @@ class Expense < ApplicationRecord
       ExpenseParticipant.create(expense: self, user: user, share: share)
 
       # Update the Leaguer model to reflect the amount each user owes
-      ExpenseParticipant.last.update_leaguer_balance
+      ExpenseParticipant.last.update_leagure_balance
     end
   end
 

@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_06_031039) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_06_231725) do
   create_table "expense_participants", force: :cascade do |t|
     t.integer "expense_id", null: false
     t.integer "user_id", null: false
     t.decimal "share", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "share_value", precision: 10, scale: 2
     t.index ["expense_id"], name: "index_expense_participants_on_expense_id"
     t.index ["user_id"], name: "index_expense_participants_on_user_id"
   end
@@ -29,6 +30,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_06_031039) do
     t.datetime "updated_at", null: false
     t.integer "creator_id", null: false
     t.integer "trip_id", null: false
+    t.string "share_type", default: "amount"
     t.index ["creator_id"], name: "index_expenses_on_creator_id"
     t.index ["trip_id"], name: "index_expenses_on_trip_id"
   end
