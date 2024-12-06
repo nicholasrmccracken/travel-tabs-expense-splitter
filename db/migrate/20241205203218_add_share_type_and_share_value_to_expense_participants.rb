@@ -1,5 +1,6 @@
-class AddShareTypeAndShareValueToExpenseParticipants < ActiveRecord::Migration[7.0]
+class AddShareTypeToExpenses < ActiveRecord::Migration[6.1]
   def change
-    add_column :expenses, :share_type, :string, default: 'amount'
+    # Column already exists, no action needed
   end
 end
+
