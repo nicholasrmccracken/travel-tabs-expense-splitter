@@ -25,7 +25,9 @@
           <% if user_signed_in? %>
             <span class="text-dark_brown font-medium">Hello, <%= current_user.email %></span>
             <%= link_to 'My Trips', trips_path, class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %> 
-            <%= link_to 'Expenses', trip_expenses_path(Trip.first), class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %>
+            <% if Trip.first.present? %>
+              <%= link_to 'Expenses', trip_expenses_path(Trip.first), class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %>
+            <% end %>
             <%= link_to "Edit Profile", edit_user_registration_path , class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
             <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
           <% else %>
@@ -50,7 +52,9 @@
     >
     <% if user_signed_in? %>
       <%= link_to 'My Trips', trips_path, class: "block text-dark_brown px-3 py-2 rounded-md hover:bg-dark_brown hover:text-light_brown" %>
-      <%= link_to 'Expenses', trip_expenses_path(Trip.first), class: "block text-dark_brown px-3 py-2 rounded-md hover:bg-dark_brown hover:text-light_brown" %>
+            <% if Trip.first.present? %>
+              <%= link_to 'Expenses', trip_expenses_path(Trip.first), class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %>
+            <% end %>
       <%= link_to "Edit Profile", edit_user_registration_path, class: "block text-dark_brown px-3 py-2 rounded-md hover:bg-dark_brown hover:text-light_brown" %>
       <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "block text-dark_brown px-3 py-2 rounded-md hover:bg-dark_brown hover:text-light_brown" %>
     <% else %>

@@ -29,7 +29,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_06_031039) do
     t.datetime "updated_at", null: false
     t.integer "creator_id", null: false
     t.integer "trip_id", null: false
-    t.string "share_type", default: "amount"
     t.index ["creator_id"], name: "index_expenses_on_creator_id"
     t.index ["trip_id"], name: "index_expenses_on_trip_id"
   end
