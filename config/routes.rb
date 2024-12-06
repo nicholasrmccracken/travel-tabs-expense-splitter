@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :trips do
     resources :expenses do
       post 'leave', on: :member, to: 'expenses#leave', as: 'leave'
+      post :update_shares, on: :member
     end
 
     member do
@@ -15,5 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'trips#index'
+  resources :friend_requests, only: [:create, :update, :destroy]
+
+  # Landing page route
+  root 'pages#landing'
 end

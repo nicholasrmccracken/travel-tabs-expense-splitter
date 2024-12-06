@@ -25,8 +25,8 @@ module.exports = {
         'button-red': '#ef4444',
         'button-hover-red': '#b91c1c',
 
-        primary: '#5e2807', // dark logo
-        off_white: '#f2f0ef', // light logo color
+        'primary': '#5e2807', // dark logo
+        'off_white': '#f2f0ef', // light logo color
   
         'accent_red': '#bf0000',
         'accent_green': '#64c7A0',

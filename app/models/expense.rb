@@ -10,6 +10,10 @@ class Expense < ApplicationRecord
   has_many :users, through: :expense_participants, source: :user
 
   after_create :update_leagures_for_shared_users
+  validate :validate_share
+  validates :share_type, inclusion: { in: %w[amount percentage], message: "must be 'amount' or 'percentage'" }
+
+  accepts_nested_attributes_for :expense_participants, allow_destroy: true
 
   CATEGORIES = ['Entertainment', 'Food and Drink', 'Lodging', 'Other', 'Transportation'].freeze
   validates :category, inclusion: { in: CATEGORIES }
@@ -24,7 +28,13 @@ class Expense < ApplicationRecord
       ExpenseParticipant.create(expense: self, user: user, share: share)
 
       # Update the Leaguer model to reflect the amount each user owes
-      ExpenseParticipant.last.update_leaguer_balance
+      ExpenseParticipant.last.update_leagure_balance
+    end
+  end
+
+  def validate_share
+    if share_type == 'percentage' && share_value > 100 # rubocop:disable Style/GuardClause
+      errors.add(:share_value, 'Percentage can\'t exceed 100.')
     end
   end
 end
