@@ -77,13 +77,33 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def update_shares
+    @expense = Expense.find(params[:id])
+    participants_params = params[:participants]
+
+    ActiveRecord::Base.transaction do
+      participants_params.each do |participant_id, share_data|
+        participant = @expense_participants.find_or_initialize_by(user_id: participant_id)
+        participant.update!(
+          share_type: share_data[:share_type],
+          share_value: share_data[:share_value]
+        )
+      end
+    end
+
+    redirect_to expense_path(@expense), notice: 'Shares updated successfully.'
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to expense_path(@expense), alert: e.message
+  end
+
   private
 
   # Strong parameters for trip.
   #
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date)
+    params.require(:expense).permit(:description, :amount, :date, :share_type,
+                                    expense_participants_attributes: %i[user_id share_value destroy])
   end
 
   def set_trip
