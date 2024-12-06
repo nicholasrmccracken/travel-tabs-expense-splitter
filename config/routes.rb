@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :friend_requests, only: [:create, :update, :destroy]
+
   # Landing page route
   root 'pages#landing'
 end

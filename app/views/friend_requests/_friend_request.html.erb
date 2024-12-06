@@ -1,0 +1,5 @@
+<p>
+  <%= friend_request.sender.name %> wants to be friends.
+  <%= button_to 'Accept', friend_request_path(friend_request, status: 'accepted'), method: :patch %>
+  <%= button_to 'Reject', friend_request_path(friend_request, status: 'rejected'), method: :patch %>
+</p>

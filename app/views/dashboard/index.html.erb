@@ -1,2 +1,43 @@
-<h1>Welcome to Your Dashboard!</h1>
-<p>Here you can manage your trips and account settings.</p>
+<div class="min-h-screen bg-off_white py-10 px-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Welcome Message -->
+    <h1 class="text-3xl font-bold text-dark_brown mb-6">Welcome back, <%= @user.name || @user.email %>!</h1>
+
+    <!-- Quick Links -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+      <%= link_to 'Create a New Trip', new_trip_path, class: "block text-center px-4 py-6 bg-light_brown text-dark_brown rounded-md shadow hover:bg-medium_brown hover:text-light_brown" %>
+      <%= link_to 'View My Trips', trips_path, class: "block text-center px-4 py-6 bg-light_brown text-dark_brown rounded-md shadow hover:bg-medium_brown hover:text-light_brown" %>
+      <%= link_to 'Manage Expenses', '#', class: "block text-center px-4 py-6 bg-light_brown text-dark_brown rounded-md shadow hover:bg-medium_brown hover:text-light_brown" %>
+    </div>
+
+    <!-- Upcoming Trips -->
+    <h2 class="text-2xl font-semibold text-dark_brown mb-4">Upcoming Trips</h2>
+    <% if @trips.any? %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <% @trips.each do |trip| %>
+          <div class="p-4 bg-light_brown text-dark_brown rounded-md shadow">
+            <h3 class="text-xl font-bold"><%= trip.name %></h3>
+            <p class="text-medium_brown">From: <%= trip.start_date %> To: <%= trip.end_date %></p>
+            <%= link_to 'View Trip', trip_path(trip), class: "text-primary-red hover:underline" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-medium_brown">You have no upcoming trips.</p>
+    <% end %>
+
+    <!-- Friend Requests -->
+    <h2 class="text-2xl font-semibold text-dark_brown mt-8 mb-4">Friend Requests</h2>
+    <% if @friend_requests.any? %>
+      <% @friend_requests.each do |request| %>
+        <div class="p-4 bg-light_brown text-dark_brown rounded-md shadow mb-4">
+          <p><%= request.sender.name %> sent you a friend request.</p>
+          <%= button_to 'Accept', friend_request_path(request, status: 'accepted'), method: :patch, class: "px-4 py-2 bg-accent_green text-white rounded hover:bg-green-700" %>
+          <%= button_to 'Reject', friend_request_path(request, status: 'rejected'), method: :patch, class: "px-4 py-2 bg-primary-red text-white rounded hover:bg-secondary-red" %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-medium_brown">No pending friend requests.</p>
+    <% end %>
+  </div>
+</div>

@@ -7,6 +7,10 @@ class User < ApplicationRecord
   # User can own many trips
   has_many :owned_trips, class_name: 'Trip', foreign_key: 'owner_id', dependent: :destroy
 
+  # Associations for friend requests
+  has_many :sent_friend_requests, class_name: 'FriendRequest', foreign_key: 'sender_id', dependent: :destroy
+  has_many :received_friend_requests, class_name: 'FriendRequest', foreign_key: 'receiver_id', dependent: :destroy
+
   # User can participate in many trips through Participant
   has_many :participants, dependent: :destroy
   has_many :trips, through: :participants
