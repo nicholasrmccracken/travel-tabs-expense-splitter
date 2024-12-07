@@ -27,9 +27,20 @@ class Expense < ApplicationRecord
     end
   end
 
+  # def validate_share
+  #  if share_type == 'percentage' && expense_participants.share_value > 100
+  #    errors.add(:share_value, 'Percentage can\'t exceed 100.')
+  #  end
+  # end
   def validate_share
-    if share_type == 'percentage' && share_value > 100 # rubocop:disable Style/GuardClause
-      errors.add(:share_value, 'Percentage can\'t exceed 100.')
+    return unless share_type == 'percentage'
+
+    expense_participants.each do |participant|
+      if participant.share_value.nil?
+        errors.add(:base, 'Participant share value must be present.')
+      elsif participant.share_value > 100
+        errors.add(:base, "Participant share value can't exceed 100%.")
+      end
     end
   end
 end
