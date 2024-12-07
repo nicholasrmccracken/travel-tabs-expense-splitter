@@ -104,7 +104,10 @@ Be sure to adhere to the [style guidelines](#style-guidelines).
 
 **Christopher:**
 
--
+- Implemented tailwind for sitewide styling
+- Created custom color palette
+- Style various views associated with trips and expenses (new expense, trip forms, trip index home page, individual trip show page)
+- Old expense participant and ledger
 
 **Nicholas:**
 
