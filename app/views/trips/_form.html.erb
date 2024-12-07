@@ -1,38 +1,38 @@
-<div class="max-w-3xl mx-auto mt-10 bg-light-brown shadow-md rounded-lg p-6">
+<div class="max-w-3xl mx-auto mt-10 bg-light_brown shadow-md rounded-lg p-6">
   <%= form_with model: @trip, local: true, class: "space-y-4" do |form| %>
 
     <!-- Trip Name -->
     <div class="flex flex-col">
-      <%= form.label :name, "Trip Name", class: "mb-1 font-medium text-primary-grey" %>
+      <%= form.label :name, "Trip Name", class: "mb-1 font-medium text-primary" %>
       <%= form.text_field :name, class: "bg-pale-brown border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-secondary-red focus:outline-none" %>
     </div>
 
     <!-- Description -->
     <div class="flex flex-col">
-      <%= form.label :description, "Description", class: "mb-1 font-medium text-primary-grey" %>
-      <%= form.text_area :description, rows: 4, class: "bg-background-grey border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-secondary-red focus:outline-none" %>
+      <%= form.label :description, "Description", class: "mb-1 font-medium text-primary" %>
+      <%= form.text_area :description, rows: 4, class: "bg-pale-brown border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-secondary-red focus:outline-none" %>
     </div>
 
     <!-- Start Date -->
     <div class="flex flex-col">
-      <%= form.label :start_date, "Start Date", class: "mb-1 font-medium text-primary-grey" %>
-      <%= form.date_field :start_date, class: "bg-background-grey border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-secondary-red focus:outline-none" %>
+      <%= form.label :start_date, "Start Date", class: "mb-1 font-medium text-primary" %>
+      <%= form.date_field :start_date, class: "bg-pale-brown border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-secondary-red focus:outline-none" %>
     </div>
 
     <!-- End Date -->
     <div class="flex flex-col">
-      <%= form.label :end_date, "End Date", class: "mb-1 font-medium text-primary-grey" %>
-      <%= form.date_field :end_date, class: "bg-background-grey border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-secondary-red focus:outline-none" %>
+      <%= form.label :end_date, "End Date", class: "mb-1 font-medium text-primary" %>
+      <%= form.date_field :end_date, class: "bg-pale-brown border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-secondary-red focus:outline-none" %>
     </div>
 
     <!-- Participants -->
     <div class="flex flex-col">
-      <%= form.label :participant_ids, "Participants", class: "mb-1 font-medium text-primary-grey" %>
+      <%= form.label :participant_ids, "Participants", class: "mb-1 font-medium text-primary" %>
       <div class="space-y-2">
         <% @trip.users.each do |user| %>
           <div class="flex items-center">
             <%= check_box_tag "trip[participant_ids][]", user.id, @trip.participant_ids.include?(user.id), id: "participant_#{user.id}", class: "h-4 w-4 text-blue-600 focus:ring focus:ring-secondary-red rounded" %>
-            <%= label_tag "participant_#{user.id}", user.email, class: "ml-2 text-gray-700" %>
+            <%= label_tag "participant_#{user.id}", user.email, class: "ml-2 text-primary" %>
           </div>
         <% end %>
       </div>
@@ -40,13 +40,13 @@
 
     <!-- Submit Button -->
     <div>
-      <%= form.submit @trip.new_record? ? "Create Trip" : "Update Trip", class: "w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none" %>
+      <%= form.submit @trip.new_record? ? "Create Trip" : "Update Trip", class: "w-full bg-primary text-off_white px-4 py-2 rounded hover:bg-off_white hover:text-primary focus:ring focus:ring-blue-300 focus:outline-none" %>
     </div>
 
   <% end %>
 
   <!-- Back Link -->
   <div class="mt-4">
-    <%= link_to "Back to Trips", trips_path, class: "text-button-red hover:underline hover:text-button-hover-red button-animation" %>
+    <%= link_to "Back to Trips", trips_path, class: "text-primary hover:underline hover:text-off_white button-animation" %>
   </div>
 </div>
