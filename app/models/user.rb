@@ -4,21 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # User can own many trips
-  has_many :owned_trips, class_name: 'Trip', foreign_key: 'owner_id', dependent: :destroy
-
-  # Associations for friend requests
   has_many :sent_friend_requests, class_name: 'FriendRequest', foreign_key: 'sender_id', dependent: :destroy
   has_many :received_friend_requests, class_name: 'FriendRequest', foreign_key: 'receiver_id', dependent: :destroy
 
-  # User can participate in many trips through Participant
+  has_many :owned_trips, class_name: 'Trip', foreign_key: 'owner_id', dependent: :destroy
   has_many :participants, dependent: :destroy
   has_many :trips, through: :participants
 
-  # User can create many expenses
   has_many :created_expenses, class_name: 'Expense', foreign_key: 'creator_id', dependent: :destroy
-
-  # User can share expenses through ExpenseParticipants
   has_many :expense_participants, dependent: :destroy
   has_many :shared_expenses, through: :expense_participants, source: :expense
 
