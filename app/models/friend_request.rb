@@ -2,7 +2,7 @@ class FriendRequest < ApplicationRecord
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
 
-  validates :status, inclusion: { in: %w[pending accepted rejected], message: "#{value} is not a valid status" }
+  validates :status, inclusion: { in: %w[pending accepted rejected], message: '%<value>s is not a valid status' }
   validates :sender, presence: true
   validates :receiver, presence: true
   validate :not_self
