@@ -1,0 +1,8 @@
+# Disable the rule enforcing single quotes
+Style/StringLiterals:
+  Enabled: false
+
+# Disable the rule preferring `return unless` over `if`
+Style/GuardClause:
+  Enabled: false
+  

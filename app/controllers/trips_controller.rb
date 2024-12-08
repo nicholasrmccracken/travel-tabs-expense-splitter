@@ -1,7 +1,7 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_trip, only: %i[show edit update destroy leave]
-  before_action :load_users, only: %i[new create]
+  before_action :set_trip, only: %i[show edit update destroy leave participants]
+  before_action :authorize_participant, only: %i[show leave]
 
   # GET /trips
   # Displays a list of trips for the current user.
@@ -25,11 +25,11 @@ class TripsController < ApplicationController
   # POST /trips
   # Creates a new trip and adds participants.
   def create
-    @trip = current_user.owned_trips.build(trip_params)
+    @trip = current_user.owned_trips.build(trip_params.except(:participant_emails))
 
     if @trip.save
       @trip.participants.create(user: current_user)
-      add_participants(@trip, params[:trip][:participant_ids])
+      add_participants(@trip, params[:trip][:participant_emails])
       redirect_to @trip, notice: 'Trip created successfully.'
     else
       render :new, status: :unprocessable_entity
@@ -48,7 +48,7 @@ class TripsController < ApplicationController
   # Updates trip once it has been edited.
   def update
     if @trip.owner == current_user
-      if @trip.update(trip_params)
+      if @trip.update(trip_params.except(:participant_emails))
         redirect_to @trip, notice: 'Trip was successfully updated.'
       else
         render :edit, status: :unprocessable_entity
@@ -75,55 +75,44 @@ class TripsController < ApplicationController
   # POST /trips/:trip_id/
   # Removed participant from trip.
   def leave
-    if @trip.users.include?(current_user)
-      @trip.users.delete(current_user)
-      redirect_to trips_path, notice: 'You have left the trip.'
-    else
-      redirect_to trips_path, alert: 'You do not have permission to leave this trip.'
-    end
+    @trip.users.delete(current_user)
+    redirect_to trips_path, notice: 'You have left the trip.'
   end
 
   private
 
   # Strong parameters for trip.
-  #
-  # @return [ActionController::Parameters] A hash of permitted parameters.
   def trip_params
-    params.require(:trip).permit(:name, :description, :start_date, :end_date)
+    params.require(:trip).permit(:name, :description, :start_date, :end_date, participant_emails: [])
   end
 
-  # Sets the @trip instance variable based on the trip ID from the parameters.
-  #
-  # @return [Trip] The trip instance corresponding to the provided ID.
-  # @raise [ActiveRecord::RecordNotFound] If no trip is found with the provided ID.
+  # Sets the trip based on the ID parameter
   def set_trip
     @trip = Trip.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to trips_path, alert: 'Trip not found.'
   end
 
-  # Loads all users except the current user.
-  #
-  # @return [ActiveRecord::Relation] A relation of users excluding the current user.
-  def load_users
-    @all_users = User.where.not(id: current_user.id)
+  def authorize_participant
+    return if @trip.participants.exists?(user_id: current_user.id)
+
+    redirect_to trips_path, alert: 'You do not have permission to view this trip.'
   end
 
   # Adds participants to the trip.
   #
   # @param trip [Trip] The trip to add participants to.
   # @param participant_ids [Array<Integer>] Array of user IDs to add as participants.
-  def add_participants(trip, participant_ids)
-    return unless participant_ids.present? || trip.owner.present?
+  def add_participants(trip, participant_emails)
+    return unless participant_emails.present? || trip.owner.present?
 
-    # Ensure the owner is included in the participant IDs
-    participant_ids ||= []
-    participant_ids << trip.owner.id if trip.owner && !participant_ids.include?(trip.owner.id)
+    participant_emails ||= []
+    participant_emails << trip.owner.email if trip.owner && participant_emails.include?(trip.owner.email)
 
-    # Filter for valid user IDs
-    valid_user_ids = User.where(id: participant_ids).pluck(:id)
+    valid_users = User.where(email: participant_emails)
 
-    # Add each valid user as a participant
-    valid_user_ids.each do |user_id|
-      trip.participants.find_or_create_by(user_id: user_id)
+    valid_users.each do |user|
+      trip.participants.find_or_create_by(user_id: user.id)
     end
   end
 end
