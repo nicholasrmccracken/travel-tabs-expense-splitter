@@ -43,11 +43,11 @@ Install all required gems by running the following command:
     bundler install
     ```
 
-4. **Run Rails Server:**  
+4. **Run Rails Server & Tailwind Watcher:**  
 Locally host the website on port 3000 by running the following command:
 
     ```bash
-    rails server
+    foreman start -f Procfile.dev
     ```
 
 5. **Access Site Locally:**  
@@ -100,11 +100,18 @@ Be sure to adhere to the [style guidelines](#style-guidelines).
 
 **Aysha:**
 
--
+- Created functionality for trips (create, edit, leave, delete, show) within model, controller, routes, and views
+- Created functionality for expenses (create, leave, delete, show) within model, controller,routes, and views
+- Implemented initial expense edit/update functionality
+- Added sharing expense functionality with amount (and initial percentage)
+- Added total owed for shared expense for each trip in view
 
 **Christopher:**
 
--
+- Implemented tailwind for sitewide styling
+- Created custom color palette
+- Style various views associated with trips and expenses (new expense, trip forms, trip index home page, individual trip show page)
+- Old expense participant and ledger
 
 **Nicholas:**
 

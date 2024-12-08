@@ -1,11 +1,7 @@
 class Participant < ApplicationRecord
-  # A Participant belongs to a Trip
   belongs_to :trip
-
-  # A Participant belongs to a User
   belongs_to :user
 
-  # Amount calculations for owed and paid amounts
   validates :amount_owed, numericality: { greater_than_or_equal_to: 0 }
   validates :amount_paid, numericality: { greater_than_or_equal_to: 0 }
 

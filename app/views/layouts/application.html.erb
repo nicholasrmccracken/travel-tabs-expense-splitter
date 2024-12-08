@@ -9,23 +9,22 @@
     <%= stylesheet_link_tag "application.tailwind", media: "all", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
-
   <body class="bg-off_white">
-
     <!-- Navbar -->
     <nav class="primary-red bg-light_brown text-dark_brown shadow-md">
       <div class="container mx-auto flex justify-between items-center p-4">
         <!-- Logo -->
-        <a href="/" class="flex items-center space-x-2">
+        <a href="/dashboard/" class="flex items-center space-x-2">
           <img src="<%= asset_path('dark_logo.png') %>" alt="TravelTabs Logo" class="h-10 w-auto" />
         </a>
 
         <div class="flex space-x-4 items-center">
           <% if user_signed_in? %>
-            <span class="text-dark_brown font-medium">Hello, <%= current_user.email %></span>
-            <%= link_to 'Expenses', trip_expenses_path(Trip.first), class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %>
-            <%= link_to 'Friend Requests', friend_requests_path, class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
+            <%= link_to 'Dashboard', dashboard_path, class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %> 
+            <%= link_to 'My Trips', trips_path, class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %> 
+            <% if Trip.first.present? %>
+              <%= link_to 'My Expenses', trip_expenses_path(Trip.first), class: "px-3 py-2 bg-medium_brown text-dark_brown hover:bg-dark_brown rounded-md hover:text-light_brown button-animation" %>
+            <% end %>
             <%= link_to "Edit Profile", edit_user_registration_path , class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
             <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-medium_brown text-dark_brown rounded-md hover:bg-dark_brown hover:text-light_brown button-animation" %>
           <% else %>
@@ -34,7 +33,6 @@
           <% end %>
         </div>
     </div>
-  </div>
   </nav>
 
     <% if user_signed_in? %>

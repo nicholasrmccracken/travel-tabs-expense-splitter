@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'user/verify_email'
   devise_for :users
 
   # Define authenticated and unauthenticated root paths
@@ -15,6 +16,14 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
   get '/about', to: 'pages#about', as: 'about'
 
+  resources :users do
+    collection do
+      get :verify_email
+    end
+  end
+
+  resources :friend_requests, only: %i[create update destroy]
+
   resources :trips do
     resources :expenses do
       post 'leave', on: :member, to: 'expenses#leave', as: 'leave'
@@ -25,8 +34,6 @@ Rails.application.routes.draw do
       post :leave
     end
   end
-
-  resources :friend_requests, only: [:create, :update, :destroy, :index]
 
   # Landing page route
   root 'pages#landing'
