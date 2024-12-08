@@ -32,7 +32,7 @@ class ExpensesController < ApplicationController
       create_expense_participants
       redirect_to trip_path(@trip), notice: 'Expense created successfully.'
     else
-      redirect_to trip_path(@trip), notice: 'Expense not created.'
+      render :new, status: :unprocessable_entity
     end
   end
 

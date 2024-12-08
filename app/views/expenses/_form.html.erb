@@ -1,11 +1,10 @@
 <div class="max-w-xl mx-auto mt-6 bg-white rounded-lg p-4">
   <%= form_with model: [@trip, @expense], local: true, class: "space-y-4" do |form| %>
-
     <% if @expense.errors.any? %>
-      <div class="alert alert-danger">
+      <div id="error_explanation">
         <ul>
           <% @expense.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+            <li class="text-center mx-auto text-red-500"><%= message %></li>
           <% end %>
         </ul>
       </div>
@@ -50,15 +49,11 @@
         <% @trip.users.each do |user| %>
           <div class="bg-gray-100 border border-gray-300 rounded-lg p-4">
             <div class="flex items-center space-x-4">
-              <!-- User Check -->
-              <%= check_box_tag "expense[expense_participants_attributes][#{user.id}][user_id]", user.id, @expense.expense_participants.exists?(user_id: user.id), id: "participant_#{user.id}", class: "h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300 rounded" %>
-              <%= label_tag "participant_#{user.id}", user.email, class: "text-dark_brown" %>
-              <!-- Share Value -->
-              <%= number_field_tag "expense[expense_participants_attributes][#{user.id}][share_value]", @expense.expense_participants.find_by(user_id: user.id)&.share_value, 
-                                   placeholder: "Enter value", 
-                                   step: "any", 
-                                   class: "bg-gray-50 border border-gray-300 rounded px-3 py-2 w-full focus:ring focus:ring-blue-300 focus:outline-none" %>
-
+              <%= form.fields_for :expense_participants, @expense.expense_participants.find_or_initialize_by(user_id: user.id) do |ep_form| %>
+                <%= ep_form.hidden_field :user_id, value: user.id %>
+                <%= label_tag "participant_#{user.id}", user.email, class: "text-dark_brown" %>
+                <%= ep_form.number_field :share_value, placeholder: "Enter value", step: "any", class: "bg-gray-50 border border-gray-300 rounded px-3 py-2 w-full focus:ring focus:ring-blue-300 focus:outline-none" %>
+              <% end %>
             </div>
           </div>
         <% end %>
