@@ -1,6 +1,16 @@
 <div class="max-w-xl mx-auto mt-6 bg-white rounded-lg p-4">
   <%= form_with model: [@trip, @expense], local: true, class: "space-y-4" do |form| %>
 
+    <% if @expense.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @expense.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <!-- Description -->
     <div class="flex flex-col">
       <%= form.label :description, "Expense Description", class: "mb-1 font-medium text-dark_brown" %>
@@ -29,7 +39,7 @@
     <div class="flex flex-col">
       <%= form.label :share_type, "Divide Expense By", class: "mb-1 font-medium text-dark_brown" %>
       <%= select_tag "expense[share_type]", 
-                     options_for_select([['Amount ($)', 'amount'], ['Percentage (%)', 'percentage']], selected: @expense.share_type || 'amount'), 
+                     options_for_select([['Amount ($)', 'amount']], selected: @expense.share_type || 'amount'), 
                      class: "bg-gray-50 border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-300 focus:outline-none" %>
     </div>
 
@@ -41,10 +51,10 @@
           <div class="bg-gray-100 border border-gray-300 rounded-lg p-4">
             <div class="flex items-center space-x-4">
               <!-- User Check -->
-              <%= check_box_tag "expense[expense_participants_attributes][#{user.id}][user_id]", user.id, false, id: "participant_#{user.id}", class: "h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300 rounded" %>
+              <%= check_box_tag "expense[expense_participants_attributes][#{user.id}][user_id]", user.id, @expense.expense_participants.exists?(user_id: user.id), id: "participant_#{user.id}", class: "h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300 rounded" %>
               <%= label_tag "participant_#{user.id}", user.email, class: "text-dark_brown" %>
               <!-- Share Value -->
-              <%= number_field_tag "expense[expense_participants_attributes][#{user.id}][share_value]", nil, 
+              <%= number_field_tag "expense[expense_participants_attributes][#{user.id}][share_value]", @expense.expense_participants.find_by(user_id: user.id)&.share_value, 
                                    placeholder: "Enter value", 
                                    step: "any", 
                                    class: "bg-gray-50 border border-gray-300 rounded px-3 py-2 w-full focus:ring focus:ring-blue-300 focus:outline-none" %>

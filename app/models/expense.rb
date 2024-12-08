@@ -13,34 +13,29 @@ class Expense < ApplicationRecord
 
   accepts_nested_attributes_for :expense_participants, allow_destroy: true
 
+  CATEGORIES = ['Entertainment', 'Food and Drink', 'Lodging', 'Other', 'Transportation'].freeze
+  validates :category, inclusion: { in: CATEGORIES }
+
   private
 
-  # Update Expense model to track when payments are made
+  # Automatically distribute expense evenly.
   def update_leagures_for_shared_users
-    users.each do |user|
-      # Calculate the share for each user
-      share = amount / users.count
-      ExpenseParticipant.create(expense: self, user: user, share: share)
+    return unless expense_participants.empty?
 
-      # Update the Leaguer model to reflect the amount each user owes
-      ExpenseParticipant.last.update_leagure_balance
+    equal_share = share_type == 'amount' ? (amount / users.count) : (100.0 / users.count)
+    users.each do |user|
+      expense_participants.create(user: user, share_value: equal_share)
     end
   end
 
-  # def validate_share
-  #  if share_type == 'percentage' && expense_participants.share_value > 100
-  #    errors.add(:share_value, 'Percentage can\'t exceed 100.')
-  #  end
-  # end
+  # Check sum of shares is valid.
   def validate_share
-    return unless share_type == 'percentage'
+    total_share = expense_participants.sum { |participant| participant.share_value.to_i }
 
-    expense_participants.each do |participant|
-      if participant.share_value.nil?
-        errors.add(:base, 'Participant share value must be present.')
-      elsif participant.share_value > 100
-        errors.add(:base, "Participant share value can't exceed 100%.")
-      end
+    if share_type == 'percentage' && total_share != 100
+      errors.add(:base, 'Total percentage must equal 100%.')
+    elsif share_type == 'amount' && total_share != amount
+      errors.add(:base, 'Total share amount must equal the expense amount.')
     end
   end
 end

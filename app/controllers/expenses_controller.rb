@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   # Ensure user is logged in before interacting with their trips
   before_action :authenticate_user!
   before_action :set_trip
-  before_action :set_expense, only: %i[show edit update destroy leave set_trip]
+  before_action :set_expense, only: %i[edit update destroy]
 
   # GET /trips/:trip_id/expenses
   # Displays a list of expenses for the current user's trips.
@@ -32,7 +32,6 @@ class ExpensesController < ApplicationController
       create_expense_participants
       redirect_to trip_path(@trip), notice: 'Expense created successfully.'
     else
-      logger.debug @expense.errors.full_messages
       redirect_to trip_path(@trip), notice: 'Expense not created.'
     end
   end
@@ -40,18 +39,19 @@ class ExpensesController < ApplicationController
   # GET /trips/:trip_id/expenses/:id/edit
   # Creates form to edit an existing expense for a trip.
   def edit
-    unless @trip.owner == current_user || @trip.users.include?(current_user) # rubocop:disable Style/GuardClause
-      redirect_to @trip, alert: 'You are not authorized to edit this expense.'
-    end
+    return if @trip.owner == current_user || @trip.users.include?(current_user)
+
+    redirect_to @trip, alert: 'You are not authorized to edit this expense.'
   end
 
   # PUT /trips/:trip_id/expenses/:id
   # Updates an expence once it has been edited.
   def update
     if @expense.update(expense_params)
-      redirect_to trip_expense_path(@trip, @expense), notice: 'Expense was successfully updated.'
+      redirect_to trip_expense_path(@trip, @expense), notice: 'Expense updated successfully.'
     else
-      render :edit, status: :unprocessable_entity
+      flash.now[:alert] = 'Failed to update expense.'
+      render :edit
     end
   end
 
@@ -78,7 +78,6 @@ class ExpensesController < ApplicationController
   end
 
   def update_shares
-    @expense = Expense.find(params[:id])
     participants_params = params[:participants]
 
     ActiveRecord::Base.transaction do
@@ -103,7 +102,7 @@ class ExpensesController < ApplicationController
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def expense_params
     params.require(:expense).permit(:category, :description, :amount, :date, :share_type,
-                                    expense_participants_attributes: %i[user_id share_value destroy])
+                                    expense_participants_attributes: %i[user_id share_value _destroy])
   end
 
   def set_trip

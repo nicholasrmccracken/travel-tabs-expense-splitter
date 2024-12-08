@@ -6,6 +6,8 @@
       <h2 class="text-xl font-bold text-gray-700 mb-4"><%= trip.name %></h2>
 
       <% if trip.expenses.any? %>
+        <% total_owed = 0 %>
+        <!-- Display each trip -->
         <% trip.expenses.each do |expense| %>
           <div class="bg-white shadow-md rounded-lg p-4 mb-4">
             <p class="text-lg font-medium text-gray-800">
@@ -13,11 +15,37 @@
               <span class="text-primary font-semibold"><%= number_to_currency(expense.amount) %></span>
             </p>
             <p class="text-sm"><em><%= expense.category %></em></p>
+
+            <!-- Display each participant's share -->
+            <div class="mt-2">
+              <h3 class="text-lg font-semibold text-gray-700">Participants:</h3>
+              <% expense.expense_participants.each do |participant| %>
+                <p class="text-sm">
+                  <%= participant.user.name || participant.user.email%> - 
+                  <span class="font-semibold"><%= number_to_currency(participant.share_value) %></span>
+                </p>
+              <% end %>
+            </div>
+
+            <!-- Calculate the total the user owes for this expense -->
+            <% if expense.expense_participants.any? %>
+              <% user_share = expense.expense_participants.find_by(user: current_user) %>
+              <% if user_share %>
+                <% total_owed += (user_share.share_value || 0) %>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
+
+        <!-- Display the total owed by user for this trip -->
+        <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+          <h3 class="text-xl font-semibold text-gray-700">Total You Owe:</h3>
+          <p class="text-lg font-semibold text-primary"><%= number_to_currency(total_owed) %></p>
+        </div>
       <% else %>
         <p class="text-gray-600">No expenses recorded for this trip yet.</p>
       <% end %>
     </div>
   <% end %>
 </div>
+
