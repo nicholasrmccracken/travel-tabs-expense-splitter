@@ -32,6 +32,7 @@ class ExpensesController < ApplicationController
       create_expense_participants
       redirect_to trip_path(@trip), notice: 'Expense created successfully.'
     else
+      flash.now[:alert] = 'Failed to create expense. Please fix the errors below.'
       render :new, status: :unprocessable_entity
     end
   end
@@ -102,7 +103,7 @@ class ExpensesController < ApplicationController
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def expense_params
     params.require(:expense).permit(:category, :description, :amount, :date, :share_type,
-                                    expense_participants_attributes: %i[user_id share_value _destroy])
+                                    expense_participants_attributes: %i[id user_id share_value _destroy])
   end
 
   def set_trip
