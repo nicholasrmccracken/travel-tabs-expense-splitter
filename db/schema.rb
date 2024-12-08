@@ -42,8 +42,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_06_231725) do
     t.integer "user_id", null: false
     t.index ["expense_id"], name: "index_expenses_users_on_expense_id"
     t.index ["user_id"], name: "index_expenses_users_on_user_id"
+  create_table "expenses_users", id: false, force: :cascade do |t|
+    t.integer "expense_id", null: false
+    t.integer "user_id", null: false
+    t.index ["expense_id"], name: "index_expenses_users_on_expense_id"
+    t.index ["user_id"], name: "index_expenses_users_on_user_id"
   end
 
+  create_table "friend_requests", force: :cascade do |t|
+    t.integer "sender_id", null: false
+    t.integer "receiver_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_friend_requests_on_receiver_id"
+    t.index ["sender_id"], name: "index_friend_requests_on_sender_id"
   create_table "friend_requests", force: :cascade do |t|
     t.integer "sender_id", null: false
     t.integer "receiver_id", null: false
@@ -64,8 +77,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_06_231725) do
     t.index ["trip_id", "user_id"], name: "index_participants_on_trip_id_and_user_id", unique: true
     t.index ["trip_id"], name: "index_participants_on_trip_id"
     t.index ["user_id"], name: "index_participants_on_user_id"
+  create_table "participants", force: :cascade do |t|
+    t.integer "trip_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "amount_owed", default: "0.0"
+    t.decimal "amount_paid", default: "0.0"
+    t.index ["trip_id", "user_id"], name: "index_participants_on_trip_id_and_user_id", unique: true
+    t.index ["trip_id"], name: "index_participants_on_trip_id"
+    t.index ["user_id"], name: "index_participants_on_user_id"
   end
 
+  create_table "trips", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "owner_id", null: false
+    t.index ["owner_id"], name: "index_trips_on_owner_id"
   create_table "trips", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -88,8 +120,28 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_06_231725) do
     t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "expense_participants", "expenses"
+  add_foreign_key "expense_participants", "users"
+  add_foreign_key "expenses", "trips"
+  add_foreign_key "expenses", "users", column: "creator_id"
+  add_foreign_key "friend_requests", "receivers"
+  add_foreign_key "friend_requests", "senders"
+  add_foreign_key "participants", "trips"
+  add_foreign_key "participants", "users"
+  add_foreign_key "trips", "users", column: "owner_id"
   add_foreign_key "expense_participants", "expenses"
   add_foreign_key "expense_participants", "users"
   add_foreign_key "expenses", "trips"

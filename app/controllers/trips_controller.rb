@@ -25,11 +25,11 @@ class TripsController < ApplicationController
   # POST /trips
   # Creates a new trip and adds participants.
   def create
-    @trip = current_user.owned_trips.build(trip_params)
+    @trip = current_user.owned_trips.build(trip_params.except(:participant_emails))
 
     if @trip.save
       @trip.participants.create(user: current_user)
-      add_participants(@trip, params[:trip][:participant_ids])
+      add_participants(@trip, params[:trip][:participant_emails])
       redirect_to @trip, notice: 'Trip created successfully.'
     else
       render :new, status: :unprocessable_entity
@@ -48,7 +48,7 @@ class TripsController < ApplicationController
   # Updates trip once it has been edited.
   def update
     if @trip.owner == current_user
-      if @trip.update(trip_params)
+      if @trip.update(trip_params.except(:participant_emails))
         redirect_to @trip, notice: 'Trip was successfully updated.'
       else
         render :edit, status: :unprocessable_entity
@@ -89,7 +89,7 @@ class TripsController < ApplicationController
   #
   # @return [ActionController::Parameters] A hash of permitted parameters.
   def trip_params
-    params.require(:trip).permit(:name, :description, :start_date, :end_date)
+    params.require(:trip).permit(:name, :description, :start_date, :end_date, participant_emails: [])
   end
 
   # Sets the @trip instance variable based on the trip ID from the parameters.
@@ -111,19 +111,16 @@ class TripsController < ApplicationController
   #
   # @param trip [Trip] The trip to add participants to.
   # @param participant_ids [Array<Integer>] Array of user IDs to add as participants.
-  def add_participants(trip, participant_ids)
-    return unless participant_ids.present? || trip.owner.present?
+  def add_participants(trip, participant_emails)
+    return unless participant_emails.present? || trip.owner.present?
 
-    # Ensure the owner is included in the participant IDs
-    participant_ids ||= []
-    participant_ids << trip.owner.id if trip.owner && !participant_ids.include?(trip.owner.id)
+    participant_emails ||= []
+    participant_emails << trip.owner.email if trip.owner && participant_emails.include?(trip.owner.email)
 
-    # Filter for valid user IDs
-    valid_user_ids = User.where(id: participant_ids).pluck(:id)
+    valid_users = User.where(email: participant_emails)
 
-    # Add each valid user as a participant
-    valid_user_ids.each do |user_id|
-      trip.participants.find_or_create_by(user_id: user_id)
+    valid_users.each do |user|
+      trip.participants.find_or_create_by(user_id: user.id)
     end
   end
 end

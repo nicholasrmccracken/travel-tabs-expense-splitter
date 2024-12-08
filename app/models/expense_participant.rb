@@ -1,8 +1,5 @@
 class ExpenseParticipant < ApplicationRecord
-  # An ExpenseParticipant belongs to an Expense
   belongs_to :expense
-
-  # An ExpenseParticipant belongs to a User
   belongs_to :user
 
   # Tracks the share of the expense attributed to the user
