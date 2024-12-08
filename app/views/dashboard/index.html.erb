@@ -7,7 +7,9 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
       <%= link_to 'Create a New Trip', new_trip_path, class: "block text-center px-4 py-6 bg-light_brown text-dark_brown rounded-md shadow hover:bg-medium_brown hover:text-light_brown" %>
       <%= link_to 'View My Trips', trips_path, class: "block text-center px-4 py-6 bg-light_brown text-dark_brown rounded-md shadow hover:bg-medium_brown hover:text-light_brown" %>
-      <%= link_to 'Manage Expenses', '#', class: "block text-center px-4 py-6 bg-light_brown text-dark_brown rounded-md shadow hover:bg-medium_brown hover:text-light_brown" %>
+      <% if Trip.first.present? %>
+        <%= link_to 'Manage Expenses', trip_expenses_path(Trip.first), class: "block text-center px-4 py-6 bg-light_brown text-dark_brown rounded-md shadow hover:bg-medium_brown hover:text-light_brown" %>
+      <% end %>
     </div>
 
     <!-- Upcoming Trips -->
@@ -39,7 +41,6 @@
     <% else %>
       <p class="text-medium_brown">No pending friend requests.</p>
     <% end %>
-        <%= link_to 'Users', users_path, class: "text-primary-red hover:underline mt-4 block" %>
   <%= link_to 'View All Friend Requests', friend_requests_path, class: "text-primary-red hover:underline mt-4 block" %>
 </div>
 </div>
