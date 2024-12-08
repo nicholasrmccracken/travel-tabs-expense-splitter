@@ -14,11 +14,4 @@ class ExpenseParticipant < ApplicationRecord
       share_value
     end
   end
-
-  # Update users balance in Leagure when expense payed
-  def update_leagure_balance
-    leaguer = Participant.find_or_create_by(trip: expense.trip, user: user)
-    leaguer.amount_owed += amount_owed
-    leaguer.save
-  end
 end

@@ -29,7 +29,6 @@ class ExpensesController < ApplicationController
 
     # Add participants to share the expense
     if @expense.save
-      create_expense_participants
       redirect_to trip_path(@trip), notice: 'Expense created successfully.'
     else
       flash.now[:alert] = 'Failed to create expense. Please fix the errors below.'
@@ -112,13 +111,5 @@ class ExpensesController < ApplicationController
 
   def set_expense
     @expense = @trip.expenses.find(params[:id])
-  end
-
-  def create_expense_participants
-    return unless params[:expense][:user_ids].present?
-
-    params[:expense][:user_ids].each do |user_id|
-      @expense.expense_participants.create(user_id: user_id) unless user_id.blank?
-    end
   end
 end
