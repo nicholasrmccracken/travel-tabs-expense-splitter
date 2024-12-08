@@ -10,92 +10,93 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_241_206_231_725) do
-  create_table 'expense_participants', force: :cascade do |t|
-    t.integer 'expense_id', null: false
-    t.integer 'user_id', null: false
-    t.decimal 'share', precision: 10, scale: 2
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.decimal 'share_value', precision: 10, scale: 2
-    t.index ['expense_id'], name: 'index_expense_participants_on_expense_id'
-    t.index ['user_id'], name: 'index_expense_participants_on_user_id'
+ActiveRecord::Schema[7.0].define(version: 2024_12_06_231725) do
+  create_table "expense_participants", force: :cascade do |t|
+    t.integer "expense_id", null: false
+    t.integer "user_id", null: false
+    t.decimal "share", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "share_type"
+    t.decimal "share_value"
+    t.index ["expense_id"], name: "index_expense_participants_on_expense_id"
+    t.index ["user_id"], name: "index_expense_participants_on_user_id"
   end
 
-  create_table 'expenses', force: :cascade do |t|
-    t.string 'description'
-    t.decimal 'amount'
-    t.date 'date'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer 'creator_id', null: false
-    t.integer 'trip_id', null: false
-    t.string 'category'
-    t.string 'share_type', default: 'amount'
-    t.index ['creator_id'], name: 'index_expenses_on_creator_id'
-    t.index ['trip_id'], name: 'index_expenses_on_trip_id'
+  create_table "expenses", force: :cascade do |t|
+    t.string "description"
+    t.decimal "amount"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "creator_id", null: false
+    t.integer "trip_id", null: false
+    t.string "share_type"
+    t.string "category"
+    t.index ["creator_id"], name: "index_expenses_on_creator_id"
+    t.index ["trip_id"], name: "index_expenses_on_trip_id"
   end
 
-  create_table 'expenses_users', id: false, force: :cascade do |t|
-    t.integer 'expense_id', null: false
-    t.integer 'user_id', null: false
-    t.index ['expense_id'], name: 'index_expenses_users_on_expense_id'
-    t.index ['user_id'], name: 'index_expenses_users_on_user_id'
+  create_table "expenses_users", id: false, force: :cascade do |t|
+    t.integer "expense_id", null: false
+    t.integer "user_id", null: false
+    t.index ["expense_id"], name: "index_expenses_users_on_expense_id"
+    t.index ["user_id"], name: "index_expenses_users_on_user_id"
   end
 
-  create_table 'friend_requests', force: :cascade do |t|
-    t.integer 'sender_id', null: false
-    t.integer 'receiver_id', null: false
-    t.string 'status'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['receiver_id'], name: 'index_friend_requests_on_receiver_id'
-    t.index ['sender_id'], name: 'index_friend_requests_on_sender_id'
+  create_table "friend_requests", force: :cascade do |t|
+    t.integer "sender_id", null: false
+    t.integer "receiver_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_friend_requests_on_receiver_id"
+    t.index ["sender_id"], name: "index_friend_requests_on_sender_id"
   end
 
-  create_table 'participants', force: :cascade do |t|
-    t.integer 'trip_id', null: false
-    t.integer 'user_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.decimal 'amount_owed', default: '0.0'
-    t.decimal 'amount_paid', default: '0.0'
-    t.index %w[trip_id user_id], name: 'index_participants_on_trip_id_and_user_id', unique: true
-    t.index ['trip_id'], name: 'index_participants_on_trip_id'
-    t.index ['user_id'], name: 'index_participants_on_user_id'
+  create_table "participants", force: :cascade do |t|
+    t.integer "trip_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "amount_owed", default: "0.0"
+    t.decimal "amount_paid", default: "0.0"
+    t.index ["trip_id", "user_id"], name: "index_participants_on_trip_id_and_user_id", unique: true
+    t.index ["trip_id"], name: "index_participants_on_trip_id"
+    t.index ["user_id"], name: "index_participants_on_user_id"
   end
 
-  create_table 'trips', force: :cascade do |t|
-    t.string 'name'
-    t.string 'description'
-    t.date 'start_date'
-    t.date 'end_date'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer 'owner_id', null: false
-    t.index ['owner_id'], name: 'index_trips_on_owner_id'
+  create_table "trips", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "owner_id", null: false
+    t.index ["owner_id"], name: "index_trips_on_owner_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'email', default: '', null: false
-    t.string 'encrypted_password', default: '', null: false
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'name'
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key 'expense_participants', 'expenses'
-  add_foreign_key 'expense_participants', 'users'
-  add_foreign_key 'expenses', 'trips'
-  add_foreign_key 'expenses', 'users', column: 'creator_id'
-  add_foreign_key 'friend_requests', 'receivers'
-  add_foreign_key 'friend_requests', 'senders'
-  add_foreign_key 'participants', 'trips'
-  add_foreign_key 'participants', 'users'
-  add_foreign_key 'trips', 'users', column: 'owner_id'
+  add_foreign_key "expense_participants", "expenses"
+  add_foreign_key "expense_participants", "users"
+  add_foreign_key "expenses", "trips"
+  add_foreign_key "expenses", "users", column: "creator_id"
+  add_foreign_key "friend_requests", "receivers"
+  add_foreign_key "friend_requests", "senders"
+  add_foreign_key "participants", "trips"
+  add_foreign_key "participants", "users"
+  add_foreign_key "trips", "users", column: "owner_id"
 end

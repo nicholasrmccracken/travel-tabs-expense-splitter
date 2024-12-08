@@ -46,7 +46,7 @@
               <p class="text-sm text-dark_brown">
                 Shared by: 
                 <%= expense.expense_participants.map do |participant| 
-                  "#{participant.user.email} (#{number_to_currency(participant.share)})"
+                  "#{participant.user.email} (#{number_to_currency(participant.share_value)})"
                 end.join(", ") %>
               </p>
             </div>
