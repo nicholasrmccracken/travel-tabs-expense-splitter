@@ -161,4 +161,13 @@ Be sure to adhere to the [style guidelines](#style-guidelines).
 
 **Sanju:**
 
--
+- Implemented friend requests feature
+- Built a `Users List` page to display all users except the current user.
+- Added "Send Friend Request" button with conditional rendering for sent and received requests.
+- Created and styled the dashboard page
+- Created and styled the navigation bar
+- Created and styled the landing page and the 'Learn more' page
+- Styled login page
+- Implemented the friend request controller
+- Created 'Edit profile' page for logged in users
+- Implemented views
