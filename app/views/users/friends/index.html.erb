@@ -1,0 +1,16 @@
+<h1 class="text-3xl font-bold text-dark_brown mb-6">Users</h1>
+
+<% if @users.any? %>
+  <% @users.each do |user| %>
+    <div class="p-4 bg-light_brown rounded-md shadow mb-4">
+      <p><strong><%= user.name %></strong></p>
+      <% unless current_user.sent_friend_requests.exists?(receiver: user) %>
+        <%= button_to 'Send Friend Request', friend_requests_path(receiver_id: user.id), method: :post, class: "px-4 py-2 bg-primary-red text-white rounded hover:bg-secondary-red" %>
+      <% else %>
+        <p class="text-medium_brown">Friend request already sent.</p>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-medium_brown">No users available to send requests to.</p>
+<% end %>

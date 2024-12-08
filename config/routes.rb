@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  # Define authenticated and unauthenticated root paths
+  authenticated :user do
+    root 'dashboard#index', as: :authenticated_root
+  end
+
+  unauthenticated do
+    root 'pages#landing', as: :unauthenticated_root
+  end
+
+
   get 'pages/about'
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
   get '/about', to: 'pages#about', as: 'about'
@@ -16,7 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :friend_requests, only: [:create, :update, :destroy]
+  resources :friend_requests, only: [:create, :update, :destroy, :index]
 
   # Landing page route
   root 'pages#landing'

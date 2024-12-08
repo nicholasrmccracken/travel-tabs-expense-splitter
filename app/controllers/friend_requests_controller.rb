@@ -28,4 +28,8 @@ class FriendRequestsController < ApplicationController
     flash[:notice] = "Friend request canceled."
     redirect_to users_path
   end
+
+  def index
+    @friend_requests = current_user.received_friend_requests.where(status: 'pending')
+  end  
 end

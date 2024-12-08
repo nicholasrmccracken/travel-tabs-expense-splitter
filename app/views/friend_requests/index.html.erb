@@ -1,2 +1,15 @@
-<h1>Friend Requests</h1>
-<%= render @received_friend_requests %>
+<h1 class="text-3xl font-bold text-dark_brown mb-6">Friend Requests</h1>
+
+<% if @friend_requests.any? %>
+  <% @friend_requests.each do |request| %>
+    <div class="p-4 bg-light_brown text-dark_brown rounded-md shadow mb-4">
+      <p><strong><%= request.sender.name %></strong> has sent you a friend request.</p>
+      <div class="mt-2 space-x-4">
+        <%= button_to 'Accept', friend_request_path(request, status: 'accepted'), method: :patch, class: "px-4 py-2 bg-accent_green text-white rounded hover:bg-green-700" %>
+        <%= button_to 'Reject', friend_request_path(request, status: 'rejected'), method: :patch, class: "px-4 py-2 bg-primary-red text-white rounded hover:bg-secondary-red" %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-medium_brown">You have no pending friend requests.</p>
+<% end %>
