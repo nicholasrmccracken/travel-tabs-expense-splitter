@@ -32,7 +32,8 @@ class ExpensesController < ApplicationController
       create_expense_participants
       redirect_to trip_path(@trip), notice: 'Expense created successfully.'
     else
-      redirect_to trip_path(@trip), notice: 'Expense not created.'
+      flash.now[:alert] = 'Failed to create expense. Please fix the errors below.'
+      render :new, status: :unprocessable_entity
     end
   end
 
