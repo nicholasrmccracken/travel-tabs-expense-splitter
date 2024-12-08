@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'friends/index'
   get 'user/verify_email'
   devise_for :users
 
@@ -22,7 +23,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :friend_requests, only: %i[create update destroy]
+  resources :friend_requests, only: [:index, :create, :update, :destroy]
+  resources :friends, only: [:index]
+
 
   resources :trips do
     resources :expenses do

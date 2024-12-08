@@ -39,5 +39,6 @@
     <% else %>
       <p class="text-medium_brown">No pending friend requests.</p>
     <% end %>
-  </div>
+  <%= link_to 'View All Friend Requests', friend_requests_path, class: "text-primary-red hover:underline mt-4 block" %>
+</div>
 </div>
