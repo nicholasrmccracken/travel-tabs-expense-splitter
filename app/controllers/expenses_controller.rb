@@ -58,11 +58,11 @@ class ExpensesController < ApplicationController
   # DELETE /trips/:trip_id/expenses/:id
   # Deletes an expense if current user is the owner.
   def destroy
-    if @trip.owner == current_user # only trip owner can delete an expense
+    if @trip.owner == current_user || @expense.creator == current_user
       @expense.destroy
       redirect_to @trip, notice: 'Expense was successfully deleted.'
     else
-      redirect_to trips_path, alert: 'You do not have permission to delete this trip.'
+      redirect_to @trip, alert: 'You do not have permission to delete this trip.'
     end
   end
 

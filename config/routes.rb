@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     root 'pages#landing', as: :unauthenticated_root
   end
 
-
   get 'pages/about'
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
   get '/about', to: 'pages#about', as: 'about'
@@ -23,11 +22,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :friend_requests, only: [:index, :create, :update, :destroy]
+  resources :friend_requests, only: %i[index create update destroy]
   resources :friends, only: [:index]
   resources :users, only: [:index]
-
-
 
   resources :trips do
     resources :expenses do
