@@ -1,5 +1,26 @@
 <h1 class="text-3xl font-bold text-dark_brown mb-6">Users</h1>
 
+<h1 class="text-3xl font-bold mb-6">Users</h1>
+
+<!-- Display users in a styled list -->
+<% @users.each do |user| %>
+  <div class="p-4 bg-light_brown text-dark_brown rounded-md shadow mb-4">
+    <p><strong>Name:</strong> <%= user.name %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
+
+    <!-- Conditionally display the appropriate action -->
+    <% if current_user.sent_friend_requests.exists?(receiver: user) %>
+      <p class="text-gray-500 italic">Friend request sent</p>
+    <% elsif current_user.received_friend_requests.exists?(sender: user) %>
+      <p class="text-gray-500 italic">Friend request received</p>
+    <% else %>
+      <%= button_to 'Send Friend Request', friend_requests_path(receiver_id: user.id), method: :post, class: "px-4 py-2 bg-accent_green text-white rounded hover:bg-green-700" %>
+    <% end %>
+  </div>
+<% end %>
+
+<!-- Display a message if there are no users to show -->
+
 <% if @users.any? %>
   <% @users.each do |user| %>
     <div class="p-4 bg-light_brown rounded-md shadow mb-4">

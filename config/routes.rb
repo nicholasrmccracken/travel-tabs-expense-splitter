@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   resources :friend_requests, only: [:index, :create, :update, :destroy]
   resources :friends, only: [:index]
+  resources :users, only: [:index]
+
 
 
   resources :trips do
