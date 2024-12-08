@@ -52,7 +52,7 @@
             </div>
             <div class="flex space-x-2">
               <% if @trip.owner == current_user || expense.creator == current_user %>
-                <%= link_to 'Edit', edit_trip_expense_path(@trip, expense), class: 'text-accent_green hover:underline' %>
+                <!-- <%= link_to 'Edit', edit_trip_expense_path(@trip, expense), class: 'text-accent_green hover:underline' %> -->
                 <%= link_to 'Delete', trip_expense_path(@trip, expense), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-accent_red hover:underline' %>
               <% end %>
               <% if expense.users.include?(current_user) && expense.creator != current_user %>
